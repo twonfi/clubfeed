@@ -2,6 +2,8 @@ from datetime import datetime, timezone
 
 from django.shortcuts import render, redirect
 from django.core.exceptions import PermissionDenied
+from django.db.models import Q
+from django.contrib import messages
 
 from .forms import CreatePostForm
 from core.models import Club
@@ -13,7 +15,8 @@ def create_post(request):
         # Staff and superusers have admin access anyway
         queryset = Club.objects.all()
     else:
-        queryset = Club.objects.filter(owners=request.user.id)
+        queryset = Club.objects.filter(Q(owners=request.user)
+                                       | Q(posters=request.user))
         if not queryset:
             raise PermissionDenied
 
@@ -25,7 +28,11 @@ def create_post(request):
             post.post_date = datetime.now(tz=timezone.utc)
             post.save()
 
+            messages.add_message(request, messages.SUCCESS,
+                f'Posted {post.title} to {post.club}.')
+
             return redirect('viewer:view_post',
+                club_id=form.cleaned_data['club'].id,
                 club_slug=form.cleaned_data['club'].slug,
                 post_id=form.instance.id,
                 post_slug=form.instance.slug,

@@ -32,6 +32,7 @@
   </header>
 
   <main id="main">
+{% block pre_h1 %}{% endblock %}
   {% if title %}<h1>{{ title }}</h1>{% endif %}
 {% block main %}{% endblock %}
   </main>
