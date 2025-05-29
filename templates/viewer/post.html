@@ -3,8 +3,11 @@
 
 {% block title %}{{ post.title }}{% endblock %}
 
+{% block pre_h1 %}
+  Posted {{ post.post_date }} by {{ post.author }}
+{% endblock %}
+
 {% block main %}
-  posted by {{ post.author }}
 
 {{ post.body|sanitized_markdown|safe }}
 {% endblock %}
