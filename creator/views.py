@@ -3,6 +3,7 @@ from datetime import datetime, timezone
 from django.shortcuts import render, redirect
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
+from django.contrib import messages
 
 from .forms import CreatePostForm
 from core.models import Club
@@ -26,6 +27,9 @@ def create_post(request):
             post.author = request.user
             post.post_date = datetime.now(tz=timezone.utc)
             post.save()
+
+            messages.add_message(request, messages.SUCCESS,
+                f'Posted {post.title} to {post.club}.')
 
             return redirect('viewer:view_post',
                 club_id=form.cleaned_data['club'].id,
