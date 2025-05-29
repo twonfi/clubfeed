@@ -11,5 +11,5 @@ club_slug_patterns = [
 
 urlpatterns = [
     path('<slug:club_slug>/', include(club_slug_patterns)),
-    path('', club_list, name='club_post_list'),
+    path('', club_list, name='club_list'),
 ]
