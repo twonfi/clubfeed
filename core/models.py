@@ -13,7 +13,12 @@ class Club(models.Model):
     name = models.CharField(unique=True)
     description = models.TextField()
 
-    owners = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    owners = models.ManyToManyField(settings.AUTH_USER_MODEL,
+        related_name='owners')
+    posters = models.ManyToManyField(settings.AUTH_USER_MODEL,
+        related_name='posters', blank=True)
+    followers = models.ManyToManyField(settings.AUTH_USER_MODEL,
+        related_name='followers', blank=True)  # TODO
 
     slug = models.SlugField(unique=True, blank=True)
 
@@ -40,7 +45,8 @@ class Post(models.Model):
         on_delete=models.CASCADE)
     post_date = models.DateTimeField()
     slug = models.SlugField(unique=True, blank=True)
-    upvotes = models.PositiveIntegerField(default=0)
+    upvoters = models.ManyToManyField(settings.AUTH_USER_MODEL,
+        related_name='upvoters', blank=True)  # TODO
 
 
     def save(self, *args, **kwargs):

@@ -2,6 +2,7 @@ from datetime import datetime, timezone
 
 from django.shortcuts import render, redirect
 from django.core.exceptions import PermissionDenied
+from django.db.models import Q
 
 from .forms import CreatePostForm
 from core.models import Club
@@ -13,7 +14,8 @@ def create_post(request):
         # Staff and superusers have admin access anyway
         queryset = Club.objects.all()
     else:
-        queryset = Club.objects.filter(owners=request.user.id)
+        queryset = Club.objects.filter(Q(owners=request.user)
+                                       | Q(posters=request.user))
         if not queryset:
             raise PermissionDenied
 
