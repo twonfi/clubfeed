@@ -31,7 +31,7 @@ class Club(models.Model):
 class Post(models.Model):
     """Long (blog) post model.
 
-    This defines a blog-styles post
+    This defines a blog-style post
     """
     club = models.ForeignKey(Club, on_delete=models.CASCADE)
     title = models.CharField()

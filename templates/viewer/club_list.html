@@ -3,7 +3,7 @@
 {% block main %}
   <ul aria-label="Club list">
     {% for club in clubs %}
-      <li><a href="{% url 'viewer:club_page' club_slug=club.slug %}">{{ club.name }}</a></li>
+      <li><a href="{% url 'viewer:club_page' club_id=club.id club_slug=club.slug %}">{{ club.name }}</a></li>
     {% endfor %}
   </ul>
 {% endblock %}

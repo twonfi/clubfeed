@@ -26,6 +26,7 @@ def create_post(request):
             post.save()
 
             return redirect('viewer:view_post',
+                club_id=form.cleaned_data['club'].id,
                 club_slug=form.cleaned_data['club'].slug,
                 post_id=form.instance.id,
                 post_slug=form.instance.slug,
