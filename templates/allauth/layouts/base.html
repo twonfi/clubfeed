@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{# temp solution until content added to base #}
+{% block main %}
+  {% if user.is_authenticated %}
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarText">
+          <div class="d-flex flex-column flex-sm-row gap-2 col-lg-3 justify-content-lg-end text-nowrap">
+            {% url 'account_email' as email_url_ %}
+            {% if email_url_ %}
+              <li>
+                <a href="{{ email_url_ }}">Emails</a>
+              </li>
+            {% endif %}
+
+            {% url 'account_change_password' as change_password_url_ %}
+            {% if change_password_url_ %}
+              <li>
+                <a href="{{ change_password_url_ }}">Change Password</a>
+              </li>
+            {% endif %}
+
+            {% url 'socialaccount_connections' as connections_url_ %}
+            {% if connections_url_ %}
+              <li>
+                <a href="{{ connections_url_ }}">Connections</a>
+              </li>
+            {% endif %}
+
+            {% url 'mfa_index' as mfa_url_ %}
+            {% if mfa_url_ %}
+              <li>
+                <a href="{{ mfa_url_ }}">Two-Factor Authentication</a>
+              </li>
+            {% endif %}
+
+            {% url 'usersessions_list' as usersessions_list_url_ %}
+            {% if usersessions_list_url_ %}
+              <li>
+                <a href="{{ usersessions_list_url_ }}">Sessions</a>
+              </li>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </nav>
+  {% endif %}
+
+  {% block body %}
+    {% block content %}
+    {% endblock content %}
+  {% endblock body %}
+  {% block extra_body %}
+  {% endblock extra_body %}
+{% endblock %}

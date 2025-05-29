@@ -1,0 +1,21 @@
+:root {
+  --ui-font: system-ui, sans-serif;
+}
+
+body {
+  font-family: var(--ui-font), sans-serif;
+}
+
+main {
+  margin: 1em 2em;
+  padding: .6em;
+  border: thin #888 solid;
+  border-radius: 10px;
+}
+
+form {
+  textarea {
+    display: block;
+    font-family: monospace;
+  }
+}

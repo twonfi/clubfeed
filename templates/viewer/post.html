@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load markdown_extras %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block main %}
+  posted by {{ post.author }}
+
+{{ post.body|sanitized_markdown|safe }}
+{% endblock %}
