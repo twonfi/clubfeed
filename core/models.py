@@ -52,3 +52,22 @@ class Post(models.Model):
 
     def __str__(self):
         return f'{str(self.club)} > {self.title}'
+
+
+class ShortMessage(models.Model):
+    """Short message model.
+
+    A short message is something that is more routine and more suitable
+     for SMS text messages and directly in push notifications.
+     These messages do not have separate pages, instead appearing on
+     the main club page, and do not support Markdown.
+    """
+    club = models.ForeignKey(Club, on_delete=models.CASCADE)
+    text = models.TextField()
+    author = models.ForeignKey(settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE)
+    post_date = models.DateTimeField()
+
+
+    def __str__(self):
+        return f'{str(self.club)} > {self.text}'
