@@ -6,8 +6,29 @@ body {
   font-family: var(--ui-font), sans-serif;
 }
 
+nav {
+  margin: 0 .3em;
+  padding: .6em;
+  border-bottom: thin #888 solid;
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      display: inline;
+      margin: 0 .4em;
+    }
+  }
+
+  #nav-user {
+    float: right;
+  }
+}
+
 main {
-  margin: 1em 2em;
+  margin: 1em 4em;
   padding: .6em;
   border: thin #888 solid;
   border-radius: 10px;
