@@ -27,8 +27,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # allauth
+    "allauth_ui",
     'allauth',
     'allauth.account',
+    "widget_tweaks",
+    "slippers",
+
+    # django-crispy-forms
+    "crispy_forms",
+    "crispy_bootstrap5",
 
     # ClubFeed
     'core',
@@ -125,3 +132,7 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# django-crispy-forms
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
