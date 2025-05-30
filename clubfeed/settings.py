@@ -73,6 +73,9 @@ TEMPLATES = [
                 # Required by allauth
                 'django.template.context_processors.request',
             ],
+            'builtins': [
+                'slippers.templatetags.slippers',
+            ],
         },
     },
 ]
