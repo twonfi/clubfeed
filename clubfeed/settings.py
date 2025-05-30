@@ -6,13 +6,13 @@ from environ import Env
 BASE_DIR = Path(__file__).resolve().parent.parent
 env = Env(
     DEBUG=(bool, False),
+    ALLOWED_HOSTS=(list, []),
 )
 Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 DEBUG = env('DEBUG')
 SECRET_KEY = env('SECRET_KEY')
-
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
 
 # Application definition

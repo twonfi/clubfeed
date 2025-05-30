@@ -16,3 +16,6 @@ urlpatterns = [
         include('viewer.urls')),
     path('create/', include('creator.urls')),
 ]
+
+# Error handlers
+handler404 = 'core.views.handler_404'

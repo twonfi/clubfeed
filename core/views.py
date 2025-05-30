@@ -1,3 +1,7 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+# noinspection PyUnusedLocal
+def handler_404(request, exception):
+    return render(request, 'core/404.html',
+        {'title': 'Four, oh, four!'})
