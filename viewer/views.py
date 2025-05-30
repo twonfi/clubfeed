@@ -16,13 +16,23 @@ def view_post(request, club_id, club_slug, post_id, post_slug):
         return redirect('viewer:view_post',
             club_id=club.id, club_slug=club_slug,
             post_id=post.id, post_slug=post.slug)
-    else:
-        context = {
-            'title': post.title,
-            'post': post,
-        }
 
-        return render(request, 'viewer/post.html', context)
+    # Post actions
+    if request.method == 'POST':
+        if 'action-upvote-toggle' in request.POST:
+            if Post.objects.filter(upvoters=request.user).exists():
+                post.upvoters.remove(request.user)
+            else:
+                post.upvoters.add(request.user)
+            post.save()
+
+    context = {
+        'title': post.title,
+        'post': post,
+        'upvoting': Post.objects.filter(upvoters=request.user).exists(),
+    }
+
+    return render(request, 'viewer/post.html', context)
 
 
 def club_list(request):

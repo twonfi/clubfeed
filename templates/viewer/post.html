@@ -8,6 +8,14 @@
 {% endblock %}
 
 {% block main %}
-
 {{ post.body|sanitized_markdown|safe }}
+
+  <form id="post-actions" method="post">{% csrf_token %}
+    <fieldset>
+      <legend>Post actions</legend>
+      <input type="submit" id="action-upvote-toggle" name="action-upvote-toggle" value="&uarr; {{ post.upvoters.count }}"
+             class="btn {% if upvoting %}btn-primary{% else %}btn-secondary{% endif %}"
+             title="{% if upvoting %}Remove upvote from{% else %}Upvote{% endif %} this post ({{ post.upvoters.count }})">
+    </fieldset>
+  </form>
 {% endblock %}
