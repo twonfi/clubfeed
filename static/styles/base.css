@@ -40,3 +40,7 @@ form {
     font-family: monospace;
   }
 }
+
+.alert {
+  margin: 1em;
+}
