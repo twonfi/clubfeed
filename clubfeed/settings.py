@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'core',
     'creator',
     'viewer',
+    'home',
 ]
 
 MIDDLEWARE = [

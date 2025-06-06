@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load markdown_extras %}
+
+{% block title %}My feed{% endblock %}
+
+{% block main %}
+    <h1 class="screen-reader-only">My feed</h1>
+
+  {% for post in posts %}
+    <article class="post">
+      <span class="poster">
+        {{ post.post_date }}
+        • in <a href="{% url 'viewer:club_page' club_id=post.club.id club_slug=post.club.slug %}">{{ post.club.name }}</a>
+        • by {{ post.author }}
+        • {{ post.upvoters.count }} upvote{{ post.upvoters.count|pluralize }}
+      </span>
+      <h2>
+        <a href="{% url 'viewer:view_post' club_id=post.club.id club_slug=post.club.slug post_id=post.id post_slug=post.slug %}">
+          {{ post.title }}
+        </a>
+      </h2>
+      {{ post.body|sanitized_markdown|safe }}
+    </article>
+  {% endfor %}
+{% endblock %}

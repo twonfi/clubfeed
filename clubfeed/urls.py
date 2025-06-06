@@ -15,6 +15,7 @@ urlpatterns = [
     path('clubs/',
         include('viewer.urls')),
     path('create/', include('creator.urls')),
+    path('', include('home.urls'))
 ]
 
 # Error handlers
