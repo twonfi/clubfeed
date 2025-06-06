@@ -30,8 +30,8 @@ nav {
 main {
   margin: 1em 4em;
   padding: .6em;
-  border: thin #888 solid;
-  border-radius: 10px;
+  /*border: thin #888 solid;*/
+  /*border-radius: 10px;*/
 }
 
 form {
