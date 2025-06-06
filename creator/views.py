@@ -17,7 +17,7 @@ def create_post(request):
     else:
         queryset = Club.objects.filter(Q(owners=request.user)
                                        | Q(posters=request.user))
-        if not queryset:
+        if not queryset:  # Deny if user doesn't have access to a club
             raise PermissionDenied
 
     if request.method == 'POST':
