@@ -35,7 +35,7 @@
       <figure>
         <div id="message-list">
           {% for message in messages %}
-            <div role="alert" class="alert alert-primary{% if message.tags %} {{ message.tags }}{% endif %}">{{ message|capfirst }}</div>
+            <div role="alert" class="alert{% if message.tags %} {{ message.tags }}{% endif %}">{{ message|capfirst }}</div>
           {% endfor %}
         </div>
       </figure>
