@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% block head %}{% block extra_head %}{% endblock extra_head %}{% endblock head %}
+
 {# temp solution until content added to base #}
 {% block main %}
   {% if user.is_authenticated %}
