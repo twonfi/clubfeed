@@ -62,10 +62,11 @@ def club_page(request, club_id, club_slug):
                 club.followers.add(request.user)
             club.save()
 
+    offset = int(request.GET.get('offset')) if request.GET.get('offset') else 0
     context = {
         'title': club.name,
         'club': club,
-        'posts': Post.objects.filter(club=club).order_by('-post_date'),
+        'posts': Post.objects.filter(club=club).order_by('-post_date')[offset:offset+10],
         'following': Club.objects.filter(followers=request.user).exists(),
     }
 
