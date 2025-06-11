@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 
 from core.models import Post
 
@@ -10,4 +10,6 @@ def home(request):
             'posts': Post.objects.all()
         })
     else:
-        return render(request, 'home/logged_out.html')
+        # TODO: Redirect to login instead
+        # return render(request, 'home/logged_out.html')
+        return HttpResponse('Unauthorized.', status=401)

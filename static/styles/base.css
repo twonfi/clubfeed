@@ -53,3 +53,10 @@ form {
   height: 1px;
   overflow: hidden;
 }
+
+article.post-card {
+  border: solid #ddd 2px;
+  border-radius: .6em;
+  margin: 1em 0;
+  padding: 1em;
+}

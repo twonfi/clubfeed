@@ -1,1 +1,6 @@
-components: {}
+components:
+  button_input: components/button/input.html
+  button_action: components/button/action.html
+  button_link: components/button/link.html
+
+  post_card: components/post/card.html

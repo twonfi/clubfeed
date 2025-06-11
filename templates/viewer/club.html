@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load markdown_extras %}
+{% load slippers %}
+
+{% block title %}{{ club.name }}{% endblock %}
+
+{% block main %}
+{{ club.description|sanitized_markdown|safe }}
+
+  <form id="post-actions" method="post">{% csrf_token %}
+    <fieldset>
+      <legend>Club actions</legend>
+
+      <!-- TODO: DRY: templates/components/button/action.html -->
+      <input type="submit" id="action-follow-toggle" name="action-follow-toggle" value="+ {{ club.followers.count }}"
+             class="btn {% if following %}btn-primary{% else %}btn-secondary{% endif %}"
+             title="{% if following %}Unf{% else %}F{% endif %}ollow this club ({{ club.followers.count }})">
+{#      {% #button_link href="{% url 'creator:create_post' %}?club={{ club.id }}" %}Post to this club{% /button_link %}#}
+    </fieldset>
+  </form>
+
+  <section id="posts">
+    {% for post in posts %}
+{% #post_card post=post %}{% /post_card %}
+  {% endfor %}
+  </section>
+{% endblock %}

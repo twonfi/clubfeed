@@ -1,0 +1,9 @@
+{% load slippers %}
+<!-- TODO: Fix else tags -->
+{% #button_input %}
+  {% if id %}id="{{ id }}"{% endif id %}
+  {% if id %}name="action-upvote-toggle"{% endif id %}
+  value="{{ text }}"
+  class="btn{% if class %} {{ class }}{% endif class %}"
+  {% if title %}title="{{ title }}"{% endif title %}
+{% /button_input %}

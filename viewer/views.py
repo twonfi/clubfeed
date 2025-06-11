@@ -53,4 +53,20 @@ def club_page(request, club_id, club_slug):
     if club.slug != club_slug:
         return redirect('viewer:club_page', club.id, club.slug)
 
-    return HttpResponse(f'Club page: {club_slug}')
+    # Club actions
+    if request.method == 'POST':
+        if 'action-follow-toggle' in request.POST:
+            if Club.objects.filter(followers=request.user).exists():
+                club.followers.remove(request.user)
+            else:
+                club.followers.add(request.user)
+            club.save()
+
+    context = {
+        'title': club.name,
+        'club': club,
+        'posts': Post.objects.filter(club=club),
+        'following': Club.objects.filter(followers=request.user).exists(),
+    }
+
+    return render(request, 'viewer/club.html', context)
