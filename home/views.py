@@ -9,7 +9,7 @@ def home(request):
         return render(request, 'home/feed.html', context={
             'title': 'My feed',
             'h1_from_title': False,  # The template provides a hidden h1
-            'posts': Post.objects.all().order_by('-post_date'),
+            'posts': Post.objects.filter(club__followers=request.user).order_by('-post_date'),
         })
     else:
         # TODO: Redirect to login instead
