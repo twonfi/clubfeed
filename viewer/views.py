@@ -65,7 +65,7 @@ def club_page(request, club_id, club_slug):
     context = {
         'title': club.name,
         'club': club,
-        'posts': Post.objects.filter(club=club),
+        'posts': Post.objects.filter(club=club).order_by('-post_date'),
         'following': Club.objects.filter(followers=request.user).exists(),
     }
 

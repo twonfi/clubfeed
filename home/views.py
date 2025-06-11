@@ -7,7 +7,7 @@ def home(request):
     """Home sweet home."""
     if request.user.is_authenticated:
         return render(request, 'home/feed.html', context={
-            'posts': Post.objects.all()
+            'posts': Post.objects.all().order_by('-post_date')
         })
     else:
         # TODO: Redirect to login instead
