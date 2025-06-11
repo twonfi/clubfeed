@@ -4,9 +4,11 @@
 {% block title %}My feed{% endblock %}
 
 {% block main %}
-    <h1 class="screen-reader-only">My feed</h1>
+  <h1 class="screen-reader-only">My feed</h1>
 
   {% for post in posts %}
-{% #post_card post=post %}{% /post_card %}
+    {% #post_card post=post %}{% /post_card %}
   {% endfor %}
+
+  {% #feed_paginator page_obj=posts %}{% /feed_paginator %}
 {% endblock %}

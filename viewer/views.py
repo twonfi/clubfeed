@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.core.paginator import Paginator
+from django.shortcuts import render, redirect
 from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -62,11 +63,16 @@ def club_page(request, club_id, club_slug):
                 club.followers.add(request.user)
             club.save()
 
-    offset = int(request.GET.get('offset')) if request.GET.get('offset') else 0
+    posts = Post.objects.filter(club=club).order_by('-post_date')
+
+    paginator = Paginator(posts, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
         'title': club.name,
         'club': club,
-        'posts': Post.objects.filter(club=club).order_by('-post_date')[offset:offset+10],
+        'posts': page_obj,
         'following': Club.objects.filter(followers=request.user).exists(),
     }
 

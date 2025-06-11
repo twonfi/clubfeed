@@ -4,3 +4,5 @@ components:
   button_link: components/button/link.html
 
   post_card: components/post/card.html
+
+  feed_paginator: components/feed/paginator.html
