@@ -60,3 +60,7 @@ article.post-card {
   margin: 1em 0;
   padding: 1em;
 }
+
+.paginator {
+  text-align: center;
+}
