@@ -44,7 +44,7 @@
 
   <main id="main">
 {% block pre_h1 %}{% endblock %}
-  {% if title %}<h1>{{ title }}</h1>{% endif %}
+  {% if title and h1_from_title is not False %}<h1>{{ title }}</h1>{% endif %}
 {% block main %}{% endblock %}
   </main>
 </body>

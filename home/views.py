@@ -7,7 +7,9 @@ def home(request):
     """Home sweet home."""
     if request.user.is_authenticated:
         return render(request, 'home/feed.html', context={
-            'posts': Post.objects.all().order_by('-post_date')
+            'title': 'My feed',
+            'h1_from_title': False,  # The template provides a hidden h1
+            'posts': Post.objects.all().order_by('-post_date'),
         })
     else:
         # TODO: Redirect to login instead
