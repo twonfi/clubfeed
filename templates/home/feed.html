@@ -10,5 +10,12 @@
     {% #post_card post=post %}{% /post_card %}
   {% endfor %}
 
-  {% #feed_paginator page_obj=posts %}{% /feed_paginator %}
+  {% if not posts and not posts.paginator.num_pages %}
+    <section id="feed-no-followed-club" style="text-align: center;">
+      <h2>Start with a club</h2>
+      <p><a href="{% url 'viewer:club_list' %}">Follow some clubs</a> to curate your own ClubFeed.</p>
+    </section>
+  {% else %}
+    {% #feed_paginator page_obj=posts %}{% /feed_paginator %}
+  {% endif %}
 {% endblock %}
