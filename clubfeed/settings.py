@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     # ClubFeed
     'core',
     'creator',
-    'viewer',
+    'clubs',
     'home',
 ]
 

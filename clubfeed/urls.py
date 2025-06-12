@@ -13,7 +13,7 @@ urlpatterns = [
 
     # ClubFeed
     path('clubs/',
-        include('viewer.urls')),
+        include('clubs.urls')),
     path('create/', include('creator.urls')),
     path('', include('home.urls'))
 ]

@@ -30,7 +30,7 @@ def create_post(request):
             messages.add_message(request, messages.SUCCESS,
                 f'Posted {post.title} to {post.club}.')
 
-            return redirect('viewer:view_post',
+            return redirect('clubs:view_post',
                 club_id=form.cleaned_data['club'].id,
                 club_slug=form.cleaned_data['club'].slug,
                 post_id=form.instance.id,
@@ -39,8 +39,8 @@ def create_post(request):
     else:
         form = CreatePostForm(queryset=queryset)
 
-    context = {
-        'title': 'Create post',
-        'form': form,
-    }
-    return render(request, 'creator/post.html', context)
+        context = {
+            'title': 'Create post',
+            'form': form,
+        }
+        return render(request, 'form.html', context)

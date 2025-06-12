@@ -16,6 +16,7 @@
              class="btn {% if following %}btn-primary{% else %}btn-secondary{% endif %}"
              title="{% if following %}Unf{% else %}F{% endif %}ollow this club ({{ club.followers.count }})">
 {#      {% #button_link href="{% url 'creator:create_post' %}?club={{ club.id }}" %}Post to this club{% /button_link %}#}
+      {% if edit_club %}{% #button_link classes='btn-secondary' href=edit_club %}Edit{% /button_link %}{% endif %}
     </fieldset>
   </form>
 

@@ -22,7 +22,7 @@
       </ul>
       <ul id="nav-main">
         <li>ClubFeed</li>
-        <li><a href="{% url 'viewer:club_list' %}">Clubs</a></li>
+        <li><a href="{% url 'clubs:club_list' %}">Clubs</a></li>
         {% if user.is_authenticated %}
           <li><a href="{% url 'creator:create_post' %}">Post</a></li>
 
