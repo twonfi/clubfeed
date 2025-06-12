@@ -11,8 +11,7 @@ from core.models import Club
 
 def create_post(request):
     # Only show clubs that include the user as an owner
-    if request.user.is_staff or request.user.is_superuser:
-        # Staff and superusers have admin access anyway
+    if request.user.has_perm('core.add_post'):
         queryset = Club.objects.all()
     else:
         queryset = Club.objects.filter(Q(owners=request.user)
