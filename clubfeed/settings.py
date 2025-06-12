@@ -26,16 +26,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # tz_detect
+    'tz_detect',
+
     # allauth
-    "allauth_ui",
+    'allauth_ui',
     'allauth',
     'allauth.account',
-    "widget_tweaks",
-    "slippers",
+    'widget_tweaks',
+    'slippers',
 
     # django-crispy-forms
-    "crispy_forms",
-    "crispy_bootstrap5",
+    'crispy_forms',
+    'crispy_bootstrap5',
+
 
     # ClubFeed
     'core',
@@ -54,8 +58,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.auth.middleware.LoginRequiredMiddleware',
 
+    # tz_detect
+    'tz_detect.middleware.TimezoneMiddleware',
+
     # allauth
-    "allauth.account.middleware.AccountMiddleware",
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'clubfeed.urls'
@@ -71,8 +78,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-
-                # Required by allauth
                 'django.template.context_processors.request',
             ],
             'builtins': [

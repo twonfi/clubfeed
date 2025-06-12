@@ -60,5 +60,7 @@
   {% if title and h1_from_title is not False %}<h1>{{ title }}</h1>{% endif %}
 {% block main %}{% endblock %}
   </main>
+
+{% load tz_detect %}{% tz_detect %}
 </body>
 </html>

@@ -8,6 +8,9 @@ admin.site.login = secure_admin_login(admin.site.login)
 urlpatterns = [
     path('admin/', admin.site.urls),
 
+    # tz_detect
+    path('tz_detect/', include('tz_detect.urls')),
+
     # allauth
     path('accounts/', include('allauth.urls')),
 
