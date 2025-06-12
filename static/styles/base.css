@@ -25,6 +25,10 @@ nav {
   #nav-user {
     float: right;
   }
+
+  #logo {
+    height: 3em;
+  }
 }
 
 main {
@@ -45,7 +49,7 @@ form {
   margin: 1em;
 }
 
-.screen-reader-only {
+.screen-reader-only, .sr-only {
   position: absolute;
   left: -10000px;
   top: auto;
