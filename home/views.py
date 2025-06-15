@@ -19,6 +19,6 @@ def home(request):
             'posts': page_obj,
         })
     else:
-        # TODO: Redirect to login instead
+        # TODO: Show "welcome" screen instead
         # return render(request, 'home/logged_out.html')
         return HttpResponse('Unauthorized.', status=401)

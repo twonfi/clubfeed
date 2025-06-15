@@ -18,7 +18,7 @@ class Club(models.Model):
     posters = models.ManyToManyField(settings.AUTH_USER_MODEL,
         related_name='posters', blank=True)
     followers = models.ManyToManyField(settings.AUTH_USER_MODEL,
-        related_name='followers', blank=True)  # TODO
+        related_name='followers', blank=True)
 
     slug = models.SlugField(unique=True, blank=True)
 
@@ -46,7 +46,7 @@ class Post(models.Model):
     post_date = models.DateTimeField()
     slug = models.SlugField(unique=True, blank=True)
     upvoters = models.ManyToManyField(settings.AUTH_USER_MODEL,
-        related_name='upvoters', blank=True)  # TODO
+        related_name='upvoters', blank=True)
 
 
     def save(self, *args, **kwargs):
