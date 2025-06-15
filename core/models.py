@@ -14,7 +14,7 @@ class Club(models.Model):
     description = models.TextField()
 
     owners = models.ManyToManyField(settings.AUTH_USER_MODEL,
-        related_name='owners')
+        related_name='owners', blank=True)
     posters = models.ManyToManyField(settings.AUTH_USER_MODEL,
         related_name='posters', blank=True)
     followers = models.ManyToManyField(settings.AUTH_USER_MODEL,
