@@ -36,6 +36,8 @@ def create_post(request):
                 post_id=form.instance.id,
                 post_slug=form.instance.slug,
             )
+        else:
+            return render(request, 'form.html', {'form': form})
     else:
         form = CreatePostForm(queryset=queryset)
 

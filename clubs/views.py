@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse
@@ -8,9 +9,11 @@ from core.models import Club, Post
 from .forms import EditClubForm
 
 
-def _redirect_club_page(club, club_slug):
+def _redirect_club_page(club: Club, club_slug: str) -> (HttpResponseRedirect
+                                                        | None):
     if club.slug != club_slug:
         return redirect('clubs:club_page', club.id, club.slug)
+    return None
 
 
 def view_post(request, club_id, club_slug, post_id, post_slug):
@@ -120,6 +123,8 @@ def edit_club(request, club_id, club_slug):
                 club_id=club.id,
                 club_slug=club.slug,
             )
+        else:
+            return render(request, 'form.html', {'form': form})
     else:
         form = EditClubForm(instance=club)
 
