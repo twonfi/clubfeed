@@ -1,17 +1,23 @@
-<div class="paginator">
-    <span class="paginator-step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1">&laquo; First</a>
-            <a href="?page={{ page_obj.previous_page_number }}">&larr; Previous</a>
-        {% endif %}
+<nav aria-label="Pages in feed">
+  <ul class="pagination justify-content-center">
+    <li class="page-item">
+      <a class="page-link{% if not page_obj.has_previous %} disabled" tabindex="-1{% endif %}" title="Previous"
+         href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% endif %}">&larr;</a>
+    </li>
 
-        <span class="paginator-current-page">
-            {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
-        </span>
-
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">Next &rarr;</a>
-            <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+    {% for page in elided_page_range %}
+      <li class="page-item{% if page == page_obj.number %} active{% endif %}">
+        {% if page == '...' %}
+          <span class="page-link disabled" tabindex="-1">&hellip;</span>
+        {% else %}
+          <a class="page-link" title="Go to page {{ page }}" href="?page={{ page }}">{{ page }}</a>
         {% endif %}
-    </span>
-</div>
+      </li>
+    {% endfor %}
+
+    <li class="page-item">
+      <a class="page-link{% if not page_obj.has_next %} disabled" tabindex="-1{% endif %}" title="Next"
+         href="{% if page_obj.has_next %}?page={{ page_obj.next_page_number }}{% endif %}">&rarr;</a>
+    </li>
+  </ul>
+</nav>

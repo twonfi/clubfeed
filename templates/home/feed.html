@@ -16,6 +16,6 @@
       <p><a href="{% url 'clubs:club_list' %}">Follow some clubs</a> to curate your own ClubFeed.</p>
     </section>
   {% else %}
-    {% #feed_paginator page_obj=posts %}{% /feed_paginator %}
+    {% #feed_paginator page_obj=posts elided_page_range=elided_page_range %}{% /feed_paginator %}
   {% endif %}
 {% endblock %}

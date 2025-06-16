@@ -90,6 +90,7 @@ def club_page(request, club_id, club_slug):
             'club_id': club.id,
             'club_slug': club.slug,
         }) if can_edit_club else False,
+        'elided_page_range': paginator.get_elided_page_range(),
     }
 
     return render(request, 'clubs/club.html', context)

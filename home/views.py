@@ -17,6 +17,7 @@ def home(request):
             'title': 'My feed',
             'h1_from_title': False,  # The template provides a hidden h1
             'posts': page_obj,
+            'elided_page_range': paginator.get_elided_page_range(),
         })
     else:
         # TODO: Show "welcome" screen instead

@@ -6,16 +6,18 @@ body {
   font-family: var(--ui-font), sans-serif;
 }
 
-nav {
-  background-color: #0424c1;
+header {
+  nav {
+    background-color: #0424c1;
 
-  .nav-link {
-    color: white;
-  }
+    .nav-link {
+      color: white;
+    }
 
-  #logo {
-    filter: drop-shadow(0 3px 5px #000000);
-    height: 3em;
+    #logo {
+      filter: drop-shadow(0 3px 5px #000000);
+      height: 3em;
+    }
   }
 }
 
@@ -51,8 +53,4 @@ article.post-card {
   border-radius: .6em;
   margin: 1em 0;
   padding: 1em;
-}
-
-.paginator {
-  text-align: center;
 }
