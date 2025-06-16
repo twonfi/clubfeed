@@ -19,6 +19,7 @@
       <input type="submit" id="action-upvote-toggle" name="action-upvote-toggle" value="&uarr; {{ post.upvoters.count }}"
              class="btn {% if upvoting %}btn-primary{% else %}btn-secondary{% endif %}"
              title="{% if upvoting %}Remove upvote from{% else %}Upvote{% endif %} this post ({{ post.upvoters.count }})">
+      {% #button_link classes='btn-secondary' href=edit_url %}Edit{% /button_link %}
     </fieldset>
   </form>
 {% endblock %}

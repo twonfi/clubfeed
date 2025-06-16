@@ -6,13 +6,22 @@ from django.core.exceptions import PermissionDenied
 from django.urls import reverse
 
 from core.models import Club, Post
-from .forms import EditClubForm
+from .forms import EditClubForm, EditPostForm
 
 
-def _redirect_club_page(club: Club, club_slug: str) -> (HttpResponseRedirect
-                                                        | None):
+def _redirect_club_page(club: Club, club_slug: str,
+                        url: str) -> (HttpResponseRedirect | None):
     if club.slug != club_slug:
-        return redirect('clubs:club_page', club.id, club.slug)
+        return redirect(url, club.id, club.slug)
+    return None
+
+
+def _redirect_post_page(club: Club, club_slug: str, post: Post, post_slug: str,
+                        url: str) -> (HttpResponseRedirect | None):
+    if post.slug != post_slug or club.slug != club_slug:
+        return redirect(url,
+            club_id=club.id, club_slug=club_slug,
+            post_id=post.id, post_slug=post.slug,)
     return None
 
 
@@ -20,10 +29,10 @@ def view_post(request, club_id, club_slug, post_id, post_slug):
     club = get_object_or_404(Club, id=club_id)
     post = get_object_or_404(Post, id=post_id)
 
-    if post.slug != post_slug or club.slug != club_slug:
-        return redirect('clubs:view_post',
-            club_id=club.id, club_slug=club_slug,
-            post_id=post.id, post_slug=post.slug)
+    _r = _redirect_post_page(club, club_slug, post, post_slug,
+        'clubs:view_post')
+    if _r:
+        return _r
 
     upvoting = post.upvoters.contains(request.user)
 
@@ -42,6 +51,9 @@ def view_post(request, club_id, club_slug, post_id, post_slug):
         'title': post.title,
         'post': post,
         'upvoting': upvoting,
+        'edit_url': reverse('clubs:edit_post', kwargs={
+            'club_id': club.id, 'club_slug': club_slug,
+            'post_id': post.id, 'post_slug': post.slug,}),
     }
 
     return render(request, 'clubs/post.html', context)
@@ -59,7 +71,9 @@ def club_list(request):
 def club_page(request, club_id, club_slug):
     club = get_object_or_404(Club, id=club_id)
 
-    _redirect_club_page(club, club_slug)
+    _r = _redirect_club_page(club, club_slug, 'clubs:club_page')
+    if _r:
+        return _r
 
     following = club.followers.contains(request.user)
 
@@ -102,7 +116,9 @@ def club_page(request, club_id, club_slug):
 def edit_club(request, club_id, club_slug):
     club = get_object_or_404(Club, id=club_id)
 
-    _redirect_club_page(club, club_slug)
+    _r = _redirect_club_page(club, club_slug, 'clubs:edit_club')
+    if _r:
+        return _r
 
     # Check if the user is an owner or has permission to modify clubs
     if (not request.user.has_perm('core.edit_club')
@@ -130,6 +146,47 @@ def edit_club(request, club_id, club_slug):
 
         context = {
             'title': f'Edit club',
+            'form': form,
+        }
+        return render(request, 'form.html', context)
+
+
+def edit_post(request, club_id, club_slug, post_id, post_slug):
+    club = get_object_or_404(Club, id=club_id)
+    post = get_object_or_404(Post, id=post_id)
+
+    _r = _redirect_post_page(club, club_slug, post, post_slug,
+        'clubs:edit_post')
+    if _r:
+        return _r
+
+    print(post.author == request.user)
+
+    # Check if the user is the poster, owner or has permission to modify posts
+    if (not request.user.has_perm('core.edit_post')
+            and not club.owners.contains(request.user)
+            and not post.author == request.user):
+        raise PermissionDenied
+
+    if request.method == 'POST':
+        form = EditPostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+
+            messages.add_message(request, messages.SUCCESS,
+                f'Updated {post.title}.')
+
+            return redirect('clubs:view_post',
+                club_id=club.id, club_slug=club.slug,
+                post_id=post.id, post_slug=post.slug,
+            )
+        else:
+            return render(request, 'form.html', {'form': form})
+    else:
+        form = EditPostForm(instance=post)
+
+        context = {
+            'title': f'Edit post',
             'form': form,
         }
         return render(request, 'form.html', context)
