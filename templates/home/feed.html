@@ -4,13 +4,13 @@
 {% block title %}My feed{% endblock %}
 
 {% block main %}
-  <h1 class="screen-reader-only">My feed</h1>
+  <h1 class="sr-only">My feed</h1>
 
   {% for post in posts %}
     {% #post_card post=post %}{% /post_card %}
   {% endfor %}
 
-  {% if not posts and not posts.paginator.num_pages %}
+  {% if not posts and posts.paginator.num_pages == 1 %}
     <section id="feed-no-followed-club" style="text-align: center;">
       <h2>Start with a club</h2>
       <p><a href="{% url 'clubs:club_list' %}">Follow some clubs</a> to curate your own ClubFeed.</p>
