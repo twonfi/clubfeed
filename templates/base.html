@@ -32,7 +32,7 @@
           </ul>
 
           <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a href="{% url 'account_login' %}" class="nav-link">
+            <li class="nav-item"><a href="{% url 'account_email' %}" class="nav-link">
               {% if user.is_authenticated %}{{ user.get_username }}{% else %}Sign in{% endif %}</a>
             </li>
 
