@@ -88,6 +88,9 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.request',
+
+                # ClubFeed
+                'core.context_processors.can_post_context',
             ],
             'builtins': [
                 'slippers.templatetags.slippers',

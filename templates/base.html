@@ -24,7 +24,9 @@
           <ul class="navbar-nav mr-auto">
             <li class="nav-item"><a href="{% url 'clubs:club_list' %}" class="nav-link">Clubs</a></li>
             {% if user.is_authenticated %}
-              <li class="nav-item"><a href="{% url 'creator:create_post' %}" class="nav-link">Post</a></li>
+              {% if can_post %}
+                <li class="nav-item"><a href="{% url 'creator:create_post' %}" class="nav-link">Post</a></li>
+              {% endif %}
 
               {% if user.is_staff %}
                 <li class="nav-item"><a href="{% url 'admin:index' %}" class="nav-link">Admin</a></li>
