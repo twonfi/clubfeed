@@ -9,6 +9,7 @@ env = Env(
     DEBUG=(bool, False),
     ALLOWED_HOSTS=(list, []),
     DB_POSTGRES_PORT=(str, ''),
+    STATIC_ROOT=(str, ''),
 )
 Env.read_env(os.path.join(BASE_DIR, '.env'))
 
@@ -142,6 +143,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = env('STATIC_ROOT')
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
