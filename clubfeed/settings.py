@@ -8,6 +8,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = Env(
     DEBUG=(bool, False),
     ALLOWED_HOSTS=(list, []),
+    DB_POSTGRES_NAME=(str, ''),
+    DB_POSTGRES_USER=(str, ''),
+    DB_POSTGRES_PASSWORD=(str, ''),
+    DB_POSTGRES_HOST=(str, ''),
     DB_POSTGRES_PORT=(str, ''),
     STATIC_ROOT=(str, ''),
 )
@@ -98,20 +102,39 @@ WSGI_APPLICATION = 'clubfeed.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {  # PostgreSQL
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_POSTGRES_NAME'),
-        'USER': env('DB_POSTGRES_USER'),
-        'PASSWORD': env('DB_POSTGRES_PASSWORD'),
-        'HOST': env('DB_POSTGRES_HOST'),
-        'PORT': env('DB_POSTGRES_PORT'),
-    },
-    'sqlite': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    },
-}
+# POSTGRES_DATABASE = {
+#     'ENGINE': 'django.db.backends.postgresql',
+#     'NAME': env('DB_POSTGRES_NAME'),
+#     'USER': env('DB_POSTGRES_USER'),
+#     'PASSWORD': env('DB_POSTGRES_PASSWORD'),
+#     'HOST': env('DB_POSTGRES_HOST'),
+#     'PORT': env('DB_POSTGRES_PORT'),
+# },
+#
+# SQLITE_DATABASE = {
+#     'ENGINE': 'django.db.backends.sqlite3',
+#     'NAME': BASE_DIR / 'db.sqlite3',
+# },
+
+match env('DATABASE'):
+    case 'sqlite':
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': BASE_DIR / 'db.sqlite3',
+            },
+        }
+    case 'postgres':
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': env('DB_POSTGRES_NAME'),
+                'USER': env('DB_POSTGRES_USER'),
+                'PASSWORD': env('DB_POSTGRES_PASSWORD'),
+                'HOST': env('DB_POSTGRES_HOST'),
+                'PORT': env('DB_POSTGRES_PORT'),
+            },
+        }
 
 
 # Password validation
