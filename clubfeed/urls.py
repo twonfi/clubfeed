@@ -9,10 +9,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # tz_detect
-    path('tz_detect/', include('tz_detect.urls')),
+    path('_tz_detect/', include('tz_detect.urls')),
 
     # allauth
     path('accounts/', include('allauth.urls')),
+
+    # martor
+    path('_martor/', include('martor.urls')),
 
     # ClubFeed
     path('clubs/',

@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
 
+    # martor
+    'martor',
+
 
     # ClubFeed
     'core',
@@ -168,3 +171,24 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
+
+# martor
+MARTOR_THEME = 'bootstrap'
+MARTOR_ENABLE_ADMIN_CSS = False
+MARTOR_TOOLBAR_BUTTONS = [
+    'bold',
+    'italic',
+    'horizontal',
+    'heading',
+    'pre-code',
+    'blockquote',
+    'unordered-list',
+    'ordered-list',
+    'link',
+    'image-link',
+    'image-upload',
+    # 'emoji',  # until dependency hell with pymdownx is fixed
+    'direct-mention',
+    'toggle-maximize',
+    'help',
+]

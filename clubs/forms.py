@@ -1,6 +1,7 @@
 from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+from martor.fields import MartorFormField
 
 from core.models import Club, Post
 
@@ -8,6 +9,8 @@ from core.models import Club, Post
 class EditClubForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        self.fields['description'] = MartorFormField()
 
         # django-crispy-forms
         self.helper = FormHelper()
