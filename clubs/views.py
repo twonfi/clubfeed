@@ -160,8 +160,6 @@ def edit_post(request, club_id, club_slug, post_id, post_slug):
     if _r:
         return _r
 
-    print(post.author == request.user)
-
     # Check if the user is the poster, owner or has permission to modify posts
     if (not request.user.has_perm('core.edit_post')
             and not club.owners.contains(request.user)
