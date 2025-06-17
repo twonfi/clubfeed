@@ -1,3 +1,4 @@
+from martor.models import MartorField
 from django.conf import settings
 from django.db import models
 from django.utils.text import slugify
@@ -11,7 +12,7 @@ class Club(models.Model):
      clubs.
     """
     name = models.CharField(unique=True)
-    description = models.TextField()
+    description = MartorField()
 
     owners = models.ManyToManyField(settings.AUTH_USER_MODEL,
         related_name='owners', blank=True)
@@ -40,7 +41,7 @@ class Post(models.Model):
     """
     club = models.ForeignKey(Club, on_delete=models.CASCADE)
     title = models.CharField()
-    body = models.TextField()
+    body = MartorField()
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE)
     post_date = models.DateTimeField()
