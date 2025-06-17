@@ -10,7 +10,7 @@ class Club(models.Model):
      and other messages. They do not necessarily need to be school
      clubs.
     """
-    name = models.CharField(unique=True)
+    name = models.CharField(unique=True, max_length=255)
     description = models.TextField()
 
     owners = models.ManyToManyField(settings.AUTH_USER_MODEL,
@@ -39,7 +39,7 @@ class Post(models.Model):
     This defines a blog-style post
     """
     club = models.ForeignKey(Club, on_delete=models.CASCADE)
-    title = models.CharField()
+    title = models.CharField(max_length=255)
     body = models.TextField()
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE)
