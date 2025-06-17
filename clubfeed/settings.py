@@ -8,6 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = Env(
     DEBUG=(bool, False),
     ALLOWED_HOSTS=(list, []),
+    DB_POSTGRES_PORT=(str, ''),
 )
 Env.read_env(os.path.join(BASE_DIR, '.env'))
 
@@ -94,10 +95,18 @@ WSGI_APPLICATION = 'clubfeed.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'default': {  # PostgreSQL
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('DB_POSTGRES_NAME'),
+        'USER': env('DB_POSTGRES_USER'),
+        'PASSWORD': env('DB_POSTGRES_PASSWORD'),
+        'HOST': env('DB_POSTGRES_HOST'),
+        'PORT': env('DB_POSTGRES_PORT'),
+    },
+    'sqlite': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    },
 }
 
 

@@ -1,4 +1,5 @@
 Django~=5.2.1
+psycopg~=3.2.9
 django-allauth~=65.8.1
 django-allauth-ui~=1.8.1
 django-widget-tweaks~=1.5.0
