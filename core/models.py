@@ -25,7 +25,7 @@ class Club(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = slugify(self.name)[:50]
         super(Club, self).save(*args, **kwargs)
 
 
@@ -52,7 +52,7 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = (f'{self.post_date.date().isoformat()}-'
-                         f'{slugify(self.title)}')
+                         f'{slugify(self.title)}')[:50]
         super(Post, self).save(*args, **kwargs)
 
 
