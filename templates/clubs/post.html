@@ -5,7 +5,11 @@
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block pre_h1 %}
-  <span class="poster">Posted {{ post.post_date }} by {{ post.author }}</span>
+  <span class="poster">
+    {{ post.post_date }}
+    • in <a href="{% url 'clubs:club_page' club_id=post.club.id club_slug=post.club.slug %}">{{ post.club.name }}</a>
+    • by {{ post.author }}
+  </span>
 {% endblock %}
 
 {% block main %}
