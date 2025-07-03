@@ -1,16 +1,16 @@
 {% load markdown_extras %}
 
-<article class="post-card">
-      <span class="poster">
-        {{ post.post_date }}
-        • in <a href="{% url 'clubs:club_page' club_id=post.club.id club_slug=post.club.slug %}">{{ post.club.name }}</a>
-        • by {{ post.author }}
-        • {{ post.upvoters.count }} upvote{{ post.upvoters.count|pluralize }}
-      </span>
-      <h2>
-        <a href="{% url 'clubs:view_post' club_id=post.club.id club_slug=post.club.slug post_id=post.id post_slug=post.slug %}">
-          {{ post.title }}
-        </a>
-      </h2>
+<article class="card post-card">
+  <span class="poster">
+    {{ post.post_date }}
+    • in <a href="{% url 'clubs:club_page' club_id=post.club.id club_slug=post.club.slug %}">{{ post.club.name }}</a>
+    • by {{ post.author }}
+    • {{ post.upvoters.count }} upvote{{ post.upvoters.count|pluralize }}
+  </span>
+  <h2>
+    <a href="{% url 'clubs:view_post' club_id=post.club.id club_slug=post.club.slug post_id=post.id post_slug=post.slug %}">
+      {{ post.title }}
+    </a>
+  </h2>
 {{ post.body|sanitized_markdown|safe }}
-    </article>
+</article>

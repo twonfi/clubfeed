@@ -22,10 +22,7 @@ header {
 }
 
 main {
-  margin: 1em 4em;
-  padding: .6em;
-  /*border: thin #888 solid;*/
-  /*border-radius: 10px;*/
+  margin: 1em 3em;
 }
 
 form {
@@ -49,8 +46,6 @@ form {
 }
 
 article.post-card {
-  border: solid #ddd 2px;
-  border-radius: .6em;
   margin: 1em 0;
   padding: 1em;
 }
