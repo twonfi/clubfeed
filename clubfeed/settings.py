@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     "allauth.account",
     "widget_tweaks",
     "slippers",
+    # django-bootstrap5
+    "django_bootstrap5",
     # django-crispy-forms
     "crispy_forms",
     "crispy_bootstrap5",
