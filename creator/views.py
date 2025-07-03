@@ -11,15 +11,14 @@ from core.models import Club
 
 def create_post(request):
     # Only show clubs that include the user as an owner
-    if request.user.has_perm('core.add_post'):
+    if request.user.has_perm("core.add_post"):
         queryset = Club.objects.all()
     else:
-        queryset = Club.objects.filter(Q(owners=request.user)
-                                       | Q(posters=request.user))
+        queryset = Club.objects.filter(Q(owners=request.user) | Q(posters=request.user))
         if not queryset:  # Deny if user doesn't have access to a club
             raise PermissionDenied
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = CreatePostForm(request.POST, queryset=queryset)
         if form.is_valid():
             post = form.save(commit=False)
@@ -27,22 +26,24 @@ def create_post(request):
             post.post_date = datetime.now(tz=timezone.utc)
             post.save()
 
-            messages.add_message(request, messages.SUCCESS,
-                f'Posted {post.title} to {post.club}.')
+            messages.add_message(
+                request, messages.SUCCESS, f"Posted {post.title} to {post.club}."
+            )
 
-            return redirect('clubs:view_post',
-                club_id=form.cleaned_data['club'].id,
-                club_slug=form.cleaned_data['club'].slug,
+            return redirect(
+                "clubs:view_post",
+                club_id=form.cleaned_data["club"].id,
+                club_slug=form.cleaned_data["club"].slug,
                 post_id=form.instance.id,
                 post_slug=form.instance.slug,
             )
         else:
-            return render(request, 'form.html', {'form': form})
+            return render(request, "form.html", {"form": form})
     else:
         form = CreatePostForm(queryset=queryset)
 
         context = {
-            'title': 'Create post',
-            'form': form,
+            "title": "Create post",
+            "form": form,
         }
-        return render(request, 'form.html', context)
+        return render(request, "form.html", context)

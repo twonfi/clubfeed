@@ -6,23 +6,18 @@ admin.autodiscover()
 admin.site.login = secure_admin_login(admin.site.login)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-
+    path("admin/", admin.site.urls),
     # tz_detect
-    path('_tz_detect/', include('tz_detect.urls')),
-
+    path("_tz_detect/", include("tz_detect.urls")),
     # allauth
-    path('accounts/', include('allauth.urls')),
-
+    path("accounts/", include("allauth.urls")),
     # martor
-    path('_martor/', include('martor.urls')),
-
+    path("_martor/", include("martor.urls")),
     # ClubFeed
-    path('clubs/',
-        include('clubs.urls')),
-    path('create/', include('creator.urls')),
-    path('', include('home.urls'))
+    path("clubs/", include("clubs.urls")),
+    path("create/", include("creator.urls")),
+    path("", include("home.urls")),
 ]
 
 # Error handlers
-handler404 = 'core.views.handler_404'
+handler404 = "core.views.handler_404"

@@ -7,19 +7,23 @@ from core.models import Post
 def home(request):
     """Home sweet home."""
     if request.user.is_authenticated:
-        posts = Post.objects.filter(club__followers=request.user).order_by('-post_date')
+        posts = Post.objects.filter(club__followers=request.user).order_by("-post_date")
 
         paginator = Paginator(posts, 10)
-        page_number = request.GET.get('page')
+        page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)
 
-        return render(request, 'home/feed.html', context={
-            'title': 'My feed',
-            'h1_from_title': False,  # The template provides a hidden h1
-            'posts': page_obj,
-            'elided_page_range': paginator.get_elided_page_range(),
-        })
+        return render(
+            request,
+            "home/feed.html",
+            context={
+                "title": "My feed",
+                "h1_from_title": False,  # The template provides a hidden h1
+                "posts": page_obj,
+                "elided_page_range": paginator.get_elided_page_range(),
+            },
+        )
     else:
         # TODO: Show "welcome" screen instead
         # return render(request, 'home/logged_out.html')
-        return HttpResponse('Unauthorized.', status=401)
+        return HttpResponse("Unauthorized.", status=401)

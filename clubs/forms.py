@@ -10,21 +10,20 @@ class EditClubForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self.fields['description'] = MartorFormField()
+        self.fields["description"] = MartorFormField()
 
         # django-crispy-forms
         self.helper = FormHelper()
-        self.helper.form_id = 'edit-club-form'
-        self.helper.form_method = 'post'
-        self.helper.add_input(Submit('save', 'Save'))
-
+        self.helper.form_id = "edit-club-form"
+        self.helper.form_method = "post"
+        self.helper.add_input(Submit("save", "Save"))
 
     class Meta:
         model = Club
         fields = (
-            'name',
-            'description',
-            'posters',
+            "name",
+            "description",
+            "posters",
         )
 
 
@@ -34,14 +33,13 @@ class EditPostForm(forms.ModelForm):
 
         # django-crispy-forms
         self.helper = FormHelper()
-        self.helper.form_id = 'edit-post-form'
-        self.helper.form_method = 'post'
-        self.helper.add_input(Submit('save', 'Save'))
-
+        self.helper.form_id = "edit-post-form"
+        self.helper.form_method = "post"
+        self.helper.add_input(Submit("save", "Save"))
 
     class Meta:
         model = Post
         fields = (
-            'title',
-            'body',
+            "title",
+            "body",
         )
