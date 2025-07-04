@@ -10,7 +10,8 @@
   A modification was necessary to fix dark mode with other pages.
 {% endcomment %}
 
-{% load i18n %}
+{% load i18n %}{% load django_bootstrap5 %}
+{% bootstrap_css %}
 <div class="main-martor main-martor-{{ field_name }}" data-field-name="{{ field_name }}" data-bs-theme="light">
   <div class="section-martor">
     <nav class="tab-martor-menu" style="position:relative">
