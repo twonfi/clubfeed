@@ -8,12 +8,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = Env(
     DEBUG=(bool, False),
     ALLOWED_HOSTS=(list, []),
+    STATIC_ROOT=(str, ""),
+    MEDIA_ROOT=(str, ""),
     DB_POSTGRES_NAME=(str, ''),
     DB_POSTGRES_USER=(str, ''),
     DB_POSTGRES_PASSWORD=(str, ''),
     DB_POSTGRES_HOST=(str, ''),
-    DB_POSTGRES_PORT=(str, ''),
-    STATIC_ROOT=(str, ''),
+    DB_POSTGRES_PORT=(str, ""),
 )
 Env.read_env(os.path.join(BASE_DIR, ".env"))
 
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
     "creator",
     "clubs",
     "home",
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -160,14 +162,20 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
+# Static files (CSS, JavaScript, Images) and media files
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 if DEBUG:
     STATIC_URL = "static/"
+
+    MEDIA_URL = "media/"
 else:
     STATIC_URL = env("STATIC_URL")
     STATIC_ROOT = env("STATIC_ROOT")
+
+    MEDIA_URL = env("MEDIA_URL")
+    MEDIA_ROOT = env("MEDIA_ROOT")
+
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]

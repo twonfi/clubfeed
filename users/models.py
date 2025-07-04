@@ -1,3 +1,4 @@
+from martor.models import MartorField
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -12,4 +13,4 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE,
         primary_key=True)
     picture = models.ImageField()
-    # description = models.TextField()
+    description = MartorField()
