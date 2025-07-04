@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 from allauth.account.decorators import secure_admin_login
 
 admin.autodiscover()
@@ -16,8 +18,15 @@ urlpatterns = [
     # ClubFeed
     path("clubs/", include("clubs.urls")),
     path("create/", include("creator.urls")),
+    path("users/", include("users.urls")),
     path("", include("home.urls")),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT
+    )
 
 # Error handlers
 handler404 = "core.views.handler_404"

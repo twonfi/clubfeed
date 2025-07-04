@@ -50,3 +50,11 @@ article.post-card {
   margin: 1em 0;
   padding: 1em;
 }
+
+img#profile-picture {
+  border-radius: 50%;
+  width: 12em;
+  height: 12em;
+  object-fit: cover;
+  margin-bottom: 1em;
+}

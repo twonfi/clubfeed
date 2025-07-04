@@ -12,5 +12,8 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE,
         primary_key=True)
-    picture = models.ImageField()
+    picture = models.ImageField(upload_to='profile_pictures')
     description = MartorField()
+
+    def __str__(self):
+        return str(self.user)
