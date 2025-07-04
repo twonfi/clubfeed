@@ -1,3 +1,10 @@
 from django.contrib import admin
+from .models import Club, Post, ClubImage
 
-# Register your models here.
+admin.site.register(
+    [
+        Club,
+        Post,
+        ClubImage,
+    ]
+)

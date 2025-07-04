@@ -6,7 +6,7 @@ from django.db.models import Q
 from django.contrib import messages
 
 from .forms import CreatePostForm
-from core.models import Club
+from clubs.models import Club
 
 
 def create_post(request):

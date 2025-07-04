@@ -3,10 +3,12 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from martor.fields import MartorFormField
 
-from core.models import Club, Post
+from clubs.models import Club, Post
 
 
 class EditClubForm(forms.ModelForm):
+    images = MultipleFileField()
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 

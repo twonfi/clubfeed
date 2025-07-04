@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse
 
-from core.models import Club, Post
+from clubs.models import Club, Post
 from .forms import EditClubForm, EditPostForm
 
 

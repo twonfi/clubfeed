@@ -3,7 +3,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from martor.fields import MartorFormField
 
-from core.models import Post
+from clubs.models import Post
 
 
 class CreatePostForm(forms.ModelForm):

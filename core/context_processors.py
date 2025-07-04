@@ -1,6 +1,6 @@
 from django.db.models import Q
 
-from core.models import Club
+from clubs.models import Club
 
 
 def can_post_context(request):

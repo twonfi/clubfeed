@@ -2,7 +2,7 @@ from django.core.paginator import Paginator
 from django.shortcuts import render, HttpResponse
 from django.db.models import Q
 
-from core.models import Post
+from clubs.models import Post
 
 
 def home(request):
