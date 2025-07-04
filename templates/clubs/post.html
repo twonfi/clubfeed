@@ -8,7 +8,7 @@
   <span class="poster">
     {{ post.post_date }}
     • in <a href="{% url 'clubs:club_page' club_id=post.club.id club_slug=post.club.slug %}">{{ post.club.name }}</a>
-    • by {{ post.author }}
+    • by <a href="{% url 'users:user_page' user_id=post.author.id username=post.author.username %}">{{ post.author }}</a>
   </span>
 {% endblock %}
 
