@@ -18,5 +18,6 @@
 
   <fieldset id="user-actions">
     <legend>User actions</legend>
+    {% if edit_profile %}{% #button_link classes='btn-secondary' href=edit_profile %}Edit{% /button_link %}{% endif %}
   </fieldset>
 {% endblock main %}

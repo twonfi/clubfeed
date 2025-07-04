@@ -2,8 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib import messages
+from django.core.exceptions import PermissionDenied
 
 from .models import Profile
+from .forms import EditProfileForm
 
 
 def _redirect_username(
@@ -68,6 +71,33 @@ def edit_profile(request, user_id, username):
     if _r:
         return _r
 
-    print(profile)
+    if user != request.user and user.has_perm('users.change_profile'):
+        raise PermissionDenied
 
-    return HttpResponseRedirect('https://www.youtube.com/watch?v=dQw4w9WgXcQ')
+    if request.method == "POST":
+        form = EditProfileForm(request.POST, instance=profile)
+        if form.is_valid():
+            form.save()
+
+            user.first_name = form.cleaned_data.get('first_name')
+            user.last_name = form.cleaned_data.get('last_name')
+            user.save()
+
+            messages.add_message(request, messages.SUCCESS,
+                f"Updated profile.")
+
+            return redirect(
+                "users:user_page",
+                user_id=user.id,
+                username=user.username,
+            )
+        else:
+            return render(request, "form.html", {"form": form})
+    else:
+        form = EditProfileForm(instance=profile)
+
+        context = {
+            "title": f"Edit profile",
+            "form": form,
+        }
+        return render(request, "form.html", context)
