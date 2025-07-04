@@ -1,5 +1,6 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, HttpResponse
+from django.db.models import Q
 
 from core.models import Post
 
@@ -7,7 +8,12 @@ from core.models import Post
 def home(request):
     """Home sweet home."""
     if request.user.is_authenticated:
-        posts = Post.objects.filter(club__followers=request.user).order_by("-post_date")
+        posts = Post.objects.filter(
+            Q(club__followers=request.user)
+            | Q(club__always_shown=True)
+            | Q(club__always_shown_for_users=request.user)
+            | Q(club__always_shown_for_groups__in=request.user.groups.all())
+        ).order_by("-post_date")
 
         paginator = Paginator(posts, 10)
         page_number = request.GET.get("page")

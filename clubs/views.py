@@ -114,6 +114,16 @@ def club_page(request, club_id, club_slug):
         else False
     )
 
+    always_shown = (
+        True
+        if (
+            club.always_shown
+            or club.always_shown_for_users.contains(request.user)
+            or Club.objects.filter(always_shown_for_groups__in=request.user.groups.all())
+        )
+        else False
+    )
+
     context = {
         "title": club.name,
         "club": club,
@@ -130,6 +140,7 @@ def club_page(request, club_id, club_slug):
             if can_edit_club
             else False
         ),
+        "always_shown": always_shown,
         "elided_page_range": paginator.get_elided_page_range(),
     }
 

@@ -2,6 +2,7 @@ from martor.models import MartorField
 from django.conf import settings
 from django.db import models
 from django.utils.text import slugify
+from django.contrib.auth.models import Group
 
 
 class Club(models.Model):
@@ -25,6 +26,16 @@ class Club(models.Model):
         settings.AUTH_USER_MODEL, related_name="followers", blank=True
     )
 
+    always_shown = models.BooleanField(default=False)
+    always_shown_for_users = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name="always_shown_for_users",
+        blank=True,
+    )
+    always_shown_for_groups = models.ManyToManyField(
+        Group, related_name="always_shown_for_groups", blank=True
+    )
+
     slug = models.SlugField(unique=True, blank=True)
 
     def save(self, *args, **kwargs):
@@ -45,7 +56,9 @@ class Post(models.Model):
     club = models.ForeignKey(Club, on_delete=models.CASCADE)
     title = models.CharField()
     body = MartorField()
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+    )
     post_date = models.DateTimeField()
     slug = models.SlugField(unique=True, blank=True)
     upvoters = models.ManyToManyField(
@@ -55,7 +68,8 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = (
-                f"{self.post_date.date().isoformat()}-" f"{slugify(self.title)}"
+                f"{self.post_date.date().isoformat()}-"
+                f"{slugify(self.title)}"
             )[:50]
         super(Post, self).save(*args, **kwargs)
 
@@ -74,7 +88,9 @@ class ShortMessage(models.Model):
 
     club = models.ForeignKey(Club, on_delete=models.CASCADE)
     text = models.TextField()
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE
+    )
     post_date = models.DateTimeField()
 
     def __str__(self):

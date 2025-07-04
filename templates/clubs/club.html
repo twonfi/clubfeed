@@ -11,6 +11,12 @@
     <fieldset>
       <legend>Club actions</legend>
 
+      {% if always_shown %}
+        <div id="always-shown-message" style="margin-bottom: .5em">
+          This club is always shown in your ClubFeed even if you don't follow.
+        </div>
+      {% endif %}
+
       <!-- TODO: DRY: templates/components/button/action.html -->
       <input type="submit" id="action-follow-toggle" name="action-follow-toggle" value="+ {{ club.followers.count }}"
              class="btn {% if following %}btn-primary{% else %}btn-secondary{% endif %}"
