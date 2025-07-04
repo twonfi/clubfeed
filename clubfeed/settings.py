@@ -210,3 +210,5 @@ MARTOR_TOOLBAR_BUTTONS = [
     "toggle-maximize",
     "help",
 ]
+MARTOR_ALTERNATIVE_JS_FILE_THEME = 'martor/martor.js'
+MARTOR_ALTERNATIVE_CSS_FILE_THEME = 'martor/martor.css'
