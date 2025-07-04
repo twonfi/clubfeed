@@ -13,7 +13,7 @@ class Club(models.Model):
      clubs.
     """
 
-    name = models.CharField(unique=True)
+    name = models.CharField(unique=True, max_length=255)
     description = MartorField()
 
     owners = models.ManyToManyField(
@@ -54,7 +54,7 @@ class Post(models.Model):
     """
 
     club = models.ForeignKey(Club, on_delete=models.CASCADE)
-    title = models.CharField()
+    title = models.CharField(max_length=255)
     body = MartorField()
     author = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE
