@@ -2,7 +2,12 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.sites.shortcuts import get_current_site
 from allauth.account.decorators import secure_admin_login
+
+site = get_current_site(None)
+admin.site.site_header = f"{site.name} administration"
+admin.site.site_title = f"{site.name} site admin"
 
 admin.autodiscover()
 admin.site.login = secure_admin_login(admin.site.login)

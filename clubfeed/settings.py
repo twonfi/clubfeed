@@ -10,6 +10,7 @@ env = Env(
     ALLOWED_HOSTS=(list, []),
     STATIC_ROOT=(str, ""),
     MEDIA_ROOT=(str, ""),
+    SITE_ID=(int, 1),
     # Database
     DB_POSTGRES_NAME=(str, ''),
     DB_POSTGRES_USER=(str, ''),
@@ -238,6 +239,9 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Sites framework
+SITE_ID = env("SITE_ID")
 
 # allauth
 ACCOUNT_ADAPTER = 'users.allauth.AccountAdapter'
