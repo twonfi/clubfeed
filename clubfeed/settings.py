@@ -18,6 +18,15 @@ env = Env(
 )
 Env.read_env(os.path.join(BASE_DIR, ".env"))
 
+
+def _env_file(key: str) -> Path:
+    env_ = env(key)
+
+    if env_[:2] == './':
+        return BASE_DIR / env_[2:]
+    return Path(env_)
+
+
 DEBUG = env("DEBUG")
 SECRET_KEY = env("SECRET_KEY")
 ALLOWED_HOSTS = env("ALLOWED_HOSTS")
@@ -68,6 +77,8 @@ MIDDLEWARE = [
     "tz_detect.middleware.TimezoneMiddleware",
     # allauth
     "allauth.account.middleware.AccountMiddleware",
+    # whitenoise
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "clubfeed.urls"
@@ -172,10 +183,13 @@ if DEBUG:
     MEDIA_ROOT = BASE_DIR / "media"
 else:
     STATIC_URL = env("STATIC_URL")
-    STATIC_ROOT = env("STATIC_ROOT")
+    STATIC_ROOT = _env_file("STATIC_ROOT")
 
     MEDIA_URL = env("MEDIA_URL")
-    MEDIA_ROOT = env("MEDIA_ROOT")
+    MEDIA_ROOT = _env_file("MEDIA_ROOT")
+
+    STATICFILES_STORAGE = ('whitenoise.'
+                           'storage.CompressedManifestStaticFilesStorage')
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
