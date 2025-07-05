@@ -42,25 +42,27 @@
 {{ club.description|sanitized_markdown|safe }}
   </article>
 
-  <form id="post-actions" method="post">{% csrf_token %}
-    <fieldset>
-      <legend>Club actions</legend>
+  {% if user.is_authenticated %}
+    <form id="post-actions" method="post">{% csrf_token %}
+      <fieldset>
+        <legend>Club actions</legend>
 
-      {% if always_shown %}
-        <div id="always-shown-message" style="margin-bottom: .5em">
-          This club is always shown in your ClubFeed even if you don't follow.
-        </div>
-      {% endif %}
+        {% if always_shown %}
+          <div id="always-shown-message" style="margin-bottom: .5em">
+            This club is always shown in your ClubFeed even if you don't follow.
+          </div>
+        {% endif %}
 
-      <!-- TODO: DRY: templates/components/button/action.html -->
-      <input type="submit" id="action-follow-toggle" name="action-follow-toggle" value="+ {{ club.followers.count }}"
-             class="btn {% if following %}btn-primary{% else %}btn-secondary{% endif %}"
-             title="{% if following %}Unf{% else %}F{% endif %}ollow this club ({{ club.followers.count }})">
-{#      {% #button_link href="{% url 'creator:create_post' %}?club={{ club.id }}" %}Post to this club{% /button_link %}#}
-      {% if edit_club %}{% #button_link classes='btn-secondary' href=edit_club %}Edit{% /button_link %}{% endif %}
-      {% if media_manager %}{% #button_link classes='btn-secondary' href=media_manager %}Media manager{% /button_link %}{% endif %}
-    </fieldset>
-  </form>
+        <!-- TODO: DRY: templates/components/button/action.html -->
+        <input type="submit" id="action-follow-toggle" name="action-follow-toggle" value="+ {{ club.followers.count }}"
+               class="btn {% if following %}btn-primary{% else %}btn-secondary{% endif %}"
+               title="{% if following %}Unf{% else %}F{% endif %}ollow this club ({{ club.followers.count }})">
+        {# TODO: {% #button_link href="{% url 'creator:create_post' %}?club={{ club.id }}" %}Post to this club{% /button_link %} #}
+        {% if edit_club %}{% #button_link classes='btn-secondary' href=edit_club %}Edit{% /button_link %}{% endif %}
+        {% if media_manager %}{% #button_link classes='btn-secondary' href=media_manager %}Media manager{% /button_link %}{% endif %}
+      </fieldset>
+    </form>
+  {% endif %}
 
   <section id="posts">
     {% for post in posts %}

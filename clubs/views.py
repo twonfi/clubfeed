@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 from clubs.models import Club, Post, ClubImage
 from .forms import EditClubForm, EditPostForm, MediaUploadForm, EditMediaForm
@@ -11,7 +12,7 @@ from clubs import media_access
 
 
 def _redirect_club_page(
-    club: Club, club_slug: str, url: str
+        club: Club, club_slug: str, url: str
 ) -> HttpResponseRedirect | None:
     if club.slug != club_slug:
         return redirect(url, club.id, club.slug)
@@ -19,7 +20,7 @@ def _redirect_club_page(
 
 
 def _redirect_post_page(
-    club: Club, club_slug: str, post: Post, post_slug: str, url: str
+        club: Club, club_slug: str, post: Post, post_slug: str, url: str
 ) -> HttpResponseRedirect | None:
     if post.slug != post_slug or club.slug != club_slug:
         return redirect(
@@ -36,11 +37,13 @@ def view_post(request, club_id, club_slug, post_id, post_slug):
     club = get_object_or_404(Club, id=club_id)
     post = get_object_or_404(Post, id=post_id)
 
-    _r = _redirect_post_page(club, club_slug, post, post_slug, "clubs:view_post")
+    _r = _redirect_post_page(club, club_slug, post, post_slug,
+        "clubs:view_post")
     if _r:
         return _r
 
-    upvoting = post.upvoters.contains(request.user)
+    upvoting = (request.user.is_authenticated
+                and post.upvoters.contains(request.user))
 
     # Post actions
     if request.method == "POST":
@@ -66,6 +69,13 @@ def view_post(request, club_id, club_slug, post_id, post_slug):
                 "post_slug": post.slug,
             },
         ),
+        "can_edit": (
+            request.user.is_authenticated and (
+                club.owners.contains(request.user)
+                or post.author == request.user
+                or request.user.has_perm("clubs.change_post")
+            )
+        )
     }
 
     return render(request, "clubs/post.html", context)
@@ -87,10 +97,11 @@ def club_page(request, club_id, club_slug):
     if _r:
         return _r
 
-    following = club.followers.contains(request.user)
+    following = (request.user.is_authenticated
+                 and club.followers.contains(request.user))
 
     # Club actions
-    if request.method == "POST":
+    if request.method == "POST" and request.user.is_authenticated:
         if "action-follow-toggle" in request.POST:
             if following:
                 club.followers.remove(request.user)
@@ -108,19 +119,20 @@ def club_page(request, club_id, club_slug):
 
     can_edit_club = (
         True
-        if (
-            club.owners.contains(request.user)
-            or request.user.has_perm("clubs.change_club")
+        if request.user.is_authenticated and (
+                club.owners.contains(request.user)
+                or request.user.has_perm("clubs.change_club")
         )
         else False
     )
 
     always_shown = (
         True
-        if (
-            club.always_shown
-            or club.always_shown_for_users.contains(request.user)
-            or Club.objects.filter(always_shown_for_groups__in=request.user.groups.all())
+        if request.user.is_authenticated and (
+                club.always_shown
+                or club.always_shown_for_users.contains(request.user)
+                or Club.objects.filter(
+            always_shown_for_groups__in=request.user.groups.all())
         )
         else False
     )
@@ -161,6 +173,7 @@ def club_page(request, club_id, club_slug):
     return render(request, "clubs/club.html", context)
 
 
+@login_required
 def edit_club(request, club_id, club_slug):
     club = get_object_or_404(Club, id=club_id)
 
@@ -168,8 +181,9 @@ def edit_club(request, club_id, club_slug):
     if _r:
         return _r
 
-    if not request.user.has_perm("clubs.change_club") and not club.owners.contains(
-        request.user
+    if not request.user.has_perm(
+            "clubs.change_club") and not club.owners.contains(
+            request.user
     ):
         raise PermissionDenied
 
@@ -180,7 +194,8 @@ def edit_club(request, club_id, club_slug):
         if form.is_valid():
             form.save()
 
-            messages.add_message(request, messages.SUCCESS, f"Updated {club.name}.")
+            messages.add_message(request, messages.SUCCESS,
+                f"Updated {club.name}.")
 
             return redirect(
                 "clubs:club_page",
@@ -199,18 +214,20 @@ def edit_club(request, club_id, club_slug):
         return render(request, "form.html", context)
 
 
+@login_required
 def edit_post(request, club_id, club_slug, post_id, post_slug):
     club = get_object_or_404(Club, id=club_id)
     post = get_object_or_404(Post, id=post_id)
 
-    _r = _redirect_post_page(club, club_slug, post, post_slug, "clubs:edit_post")
+    _r = _redirect_post_page(club, club_slug, post, post_slug,
+        "clubs:edit_post")
     if _r:
         return _r
 
     if (
-        not request.user.has_perm("clubs.change_post")
-        and not club.owners.contains(request.user)
-        and not post.author == request.user
+            not request.user.has_perm("clubs.change_post")
+            and not club.owners.contains(request.user)
+            and not post.author == request.user
     ):
         raise PermissionDenied
 
@@ -244,6 +261,7 @@ def edit_post(request, club_id, club_slug, post_id, post_slug):
         return render(request, "form.html", context)
 
 
+@login_required
 def media_manager(request, club_id, club_slug):
     """Media (file) management for clubs.
 
@@ -300,19 +318,21 @@ def media_manager(request, club_id, club_slug):
     )
 
 
+@login_required
 def edit_media(request, club_id, club_slug, media_id):
     """Edit existing media."""
 
     club = get_object_or_404(Club, id=club_id)
+
+    access = media_access(request.user, club)
+    if not "r" in access or not ("u" in access and "d" in access):
+        raise PermissionDenied
+
     f = get_object_or_404(ClubImage, id=media_id, club=club)
 
     _r = _redirect_club_page(club, club_slug, "clubs:edit_media")
     if _r:
         return _r
-
-    access = media_access(request.user, club)
-    if not "r" in access or not ("u" in access and "d" in access):
-        raise PermissionDenied
 
     if request.method == "POST":
         form = EditMediaForm(request.POST, instance=f, access=access)

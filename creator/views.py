@@ -4,11 +4,13 @@ from django.shortcuts import render, redirect
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 from .forms import CreatePostForm
 from clubs.models import Club
 
 
+@login_required
 def create_post(request):
     # Only show clubs that include the user as an owner
     if request.user.has_perm("core.add_post"):

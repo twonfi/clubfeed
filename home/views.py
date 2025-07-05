@@ -30,6 +30,8 @@ def home(request):
             },
         )
     else:
-        # TODO: Show "welcome" screen instead
-        # return render(request, 'home/logged_out.html')
-        return HttpResponse("Unauthorized.", status=401)
+        return render(request, 'home/landing.html', context={
+            "title": "ClubFeed: See what's up in your community",
+            "h1_from_title": False,
+            "show_site_name_in_title": False,
+        })

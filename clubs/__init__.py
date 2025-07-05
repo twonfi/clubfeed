@@ -6,6 +6,9 @@ def media_access(user, club = None) -> str:
     :type club: clubs.models.Club
     """
 
+    if not user.is_authenticated:
+        return ""
+
     access = ""
 
     if club:
