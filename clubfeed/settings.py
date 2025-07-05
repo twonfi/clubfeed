@@ -10,11 +10,21 @@ env = Env(
     ALLOWED_HOSTS=(list, []),
     STATIC_ROOT=(str, ""),
     MEDIA_ROOT=(str, ""),
+    # Database
     DB_POSTGRES_NAME=(str, ''),
     DB_POSTGRES_USER=(str, ''),
     DB_POSTGRES_PASSWORD=(str, ''),
     DB_POSTGRES_HOST=(str, ''),
     DB_POSTGRES_PORT=(str, ""),
+    # Email
+    EMAIL_SMTP_HOST=(str, ""),
+    EMAIL_SMTP_POST=(int, 25),
+    EMAIL_SMTP_HOST_USER=(str, ""),
+    EMAIL_SMTP_HOST_PASSWORD=(str, ""),
+    EMAIL_SMTP_USE_TLS=(bool, False),
+    EMAIL_SMTP_SSL_CERTFILE=(str, None),
+    EMAIL_SMTP_SSL_KEYFILE=(str, None),
+    EMAIL_SMTP_TIMEOUT=(int, ""),
 )
 Env.read_env(os.path.join(BASE_DIR, ".env"))
 
@@ -146,6 +156,25 @@ match env('DATABASE'):
                 'PORT': env('DB_POSTGRES_PORT'),
             },
         }
+
+
+# Email
+DEFAULT_FROM_EMAIL = env("EMAIL_FROM")
+SERVER_EMAIL = env("EMAIL_FROM_SERVER")
+match env("EMAIL_BACKEND"):
+    case "smtp":
+        EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+        EMAIL_HOST = env("EMAIL_SMTP_HOST")
+        EMAIL_POST = env("EMAIL_SMTP_HOST")
+        EMAIL_HOST_USER = env("EMAIL_SMTP_HOST")
+        EMAIL_HOST_PASSWORD = env("EMAIL_SMTP_HOST")
+        EMAIL_USE_TLS = env("EMAIL_SMTP_HOST")
+        EMAIL_SSL_CERTFILE = env("EMAIL_SMTP_HOST")
+        EMAIL_SSL_KEYFILE = env("EMAIL_SMTP_HOST")
+        EMAIL_TIMEOUT = env("EMAIL_SMTP_HOST")
+    case "console":
+        EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
 
 
 # Password validation

@@ -7,10 +7,10 @@
   {% if user.is_authenticated %}
     <nav>
       <ul>
-        {% url 'account_email' as email_url_ %}
-        {% if email_url_ %}
+        {% url 'account_email' as EMAIL_SMTP_url_ %}
+        {% if EMAIL_SMTP_url_ %}
           <li>
-            <a href="{{ email_url_ }}">Emails</a>
+            <a href="{{ EMAIL_SMTP_url_ }}">Emails</a>
           </li>
         {% endif %}
 
