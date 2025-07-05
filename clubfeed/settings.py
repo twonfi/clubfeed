@@ -247,7 +247,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 SITE_ID = env("SITE_ID")
 
 # allauth
-ACCOUNT_ADAPTER = 'users.allauth.AccountAdapter'
+ACCOUNT_ADAPTER = "users.allauth.AccountAdapter"
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 
 # django-crispy-forms
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
