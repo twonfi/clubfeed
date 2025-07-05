@@ -9,6 +9,7 @@
       <w>postgre</w>
       <w>pymdownx</w>
       <w>sameorigin</w>
+      <w>socialaccount</w>
       <w>truncatechars</w>
     </words>
   </dictionary>

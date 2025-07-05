@@ -11,6 +11,7 @@ env = Env(
     STATIC_ROOT=(str, ""),
     MEDIA_ROOT=(str, ""),
     SITE_ID=(int, 1),
+    INSTALLED_APPS=(list, []),
     # Database
     DB_POSTGRES_NAME=(str, ''),
     DB_POSTGRES_USER=(str, ''),
@@ -61,6 +62,7 @@ INSTALLED_APPS = [
     "allauth_ui",
     "allauth",
     "allauth.account",
+    "allauth.socialaccount",
     "widget_tweaks",
     "slippers",
     # django-bootstrap5
@@ -82,6 +84,7 @@ INSTALLED_APPS = [
     "home",
     "users",
 ]
+INSTALLED_APPS += env("INSTALLED_APPS")
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
