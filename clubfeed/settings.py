@@ -18,7 +18,7 @@ env = Env(
     DB_POSTGRES_PORT=(str, ""),
     # Email
     EMAIL_SMTP_HOST=(str, ""),
-    EMAIL_SMTP_POST=(int, 25),
+    EMAIL_SMTP_PORT=(int, 25),
     EMAIL_SMTP_HOST_USER=(str, ""),
     EMAIL_SMTP_HOST_PASSWORD=(str, ""),
     EMAIL_SMTP_USE_TLS=(bool, False),
@@ -165,13 +165,13 @@ match env("EMAIL_BACKEND"):
     case "smtp":
         EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
         EMAIL_HOST = env("EMAIL_SMTP_HOST")
-        EMAIL_POST = env("EMAIL_SMTP_HOST")
-        EMAIL_HOST_USER = env("EMAIL_SMTP_HOST")
-        EMAIL_HOST_PASSWORD = env("EMAIL_SMTP_HOST")
-        EMAIL_USE_TLS = env("EMAIL_SMTP_HOST")
-        EMAIL_SSL_CERTFILE = env("EMAIL_SMTP_HOST")
-        EMAIL_SSL_KEYFILE = env("EMAIL_SMTP_HOST")
-        EMAIL_TIMEOUT = env("EMAIL_SMTP_HOST")
+        EMAIL_PORT = env("EMAIL_SMTP_PORT")
+        EMAIL_HOST_USER = env("EMAIL_SMTP_HOST_USER")
+        EMAIL_HOST_PASSWORD = env("EMAIL_SMTP_HOST_PASSWORD")
+        EMAIL_USE_TLS = env("EMAIL_SMTP_USE_TLS")
+        EMAIL_SSL_CERTFILE = env("EMAIL_SMTP_SSL_CERTFILE")
+        EMAIL_SSL_KEYFILE = env("EMAIL_SMTP_SSL_KEYFILE")
+        EMAIL_TIMEOUT = env("EMAIL_SMTP_TIMEOUT")
     case "console":
         EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
