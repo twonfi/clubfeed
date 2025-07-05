@@ -30,6 +30,8 @@ def _env_file(key: str) -> str:
 DEBUG = env("DEBUG")
 SECRET_KEY = env("SECRET_KEY")
 ALLOWED_HOSTS = env("ALLOWED_HOSTS")
+# No excuse to not use HTTPS
+CSRF_TRUSTED_ORIGINS = [f"https://{h}" for h in ALLOWED_HOSTS]
 
 
 # Application definition
