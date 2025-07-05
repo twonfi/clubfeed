@@ -75,7 +75,6 @@ class EditMediaForm(forms.ModelForm):
     class Meta:
         model = ClubImage
         fields = [
-            "image",
             "name",
             "alt",
         ]
