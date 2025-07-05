@@ -1,11 +1,3 @@
-:root {
-  --ui-font: system-ui, sans-serif;
-}
-
-body {
-  font-family: var(--ui-font), sans-serif;
-}
-
 header {
   nav {
     background-color: #0424c1;
