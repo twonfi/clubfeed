@@ -2,7 +2,8 @@
 {% load crispy_forms_tags %}
 
 {% block main %}
-  <form method="post">
+  <div class="mb-3">{{ pre_form|safe }}</div>
+  <form method="post"{% if form_data %} enctype="multipart/form-data"{% endif %}>
     {% crispy form %}
   </form>
 {% endblock %}

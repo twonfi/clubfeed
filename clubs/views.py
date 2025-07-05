@@ -5,8 +5,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse
 
-from clubs.models import Club, Post
-from .forms import EditClubForm, EditPostForm
+from clubs.models import Club, Post, ClubImage
+from .forms import EditClubForm, EditPostForm, MediaUploadForm, EditMediaForm
+from clubs import media_access
 
 
 def _redirect_club_page(
@@ -109,7 +110,7 @@ def club_page(request, club_id, club_slug):
         True
         if (
             club.owners.contains(request.user)
-            or request.user.has_perm("core.change_club")
+            or request.user.has_perm("clubs.change_club")
         )
         else False
     )
@@ -140,6 +141,17 @@ def club_page(request, club_id, club_slug):
             if can_edit_club
             else False
         ),
+        "media_manager": (
+            reverse(
+                "clubs:media_manager",
+                kwargs={
+                    "club_id": club.id,
+                    "club_slug": club.slug,
+                },
+            )
+            if media_access(request.user, club)
+            else False
+        ),
         "always_shown": always_shown,
         "elided_page_range": paginator.get_elided_page_range(),
     }
@@ -154,8 +166,7 @@ def edit_club(request, club_id, club_slug):
     if _r:
         return _r
 
-    # Check if the user is an owner or has permission to modify clubs
-    if not request.user.has_perm("core.edit_club") and not club.owners.contains(
+    if not request.user.has_perm("clubs.change_club") and not club.owners.contains(
         request.user
     ):
         raise PermissionDenied
@@ -194,9 +205,8 @@ def edit_post(request, club_id, club_slug, post_id, post_slug):
     if _r:
         return _r
 
-    # Check if the user is the poster, owner or has permission to modify posts
     if (
-        not request.user.has_perm("core.edit_post")
+        not request.user.has_perm("clubs.change_post")
         and not club.owners.contains(request.user)
         and not post.author == request.user
     ):
@@ -207,7 +217,11 @@ def edit_post(request, club_id, club_slug, post_id, post_slug):
         if form.is_valid():
             form.save()
 
-            messages.add_message(request, messages.SUCCESS, f"Updated {post.title}.")
+            messages.add_message(
+                request,
+                messages.SUCCESS,
+                f"Updated {post.title}."
+            )
 
             return redirect(
                 "clubs:view_post",
@@ -226,3 +240,114 @@ def edit_post(request, club_id, club_slug, post_id, post_slug):
             "form": form,
         }
         return render(request, "form.html", context)
+
+
+def media_manager(request, club_id, club_slug):
+    """Media (file) management for clubs.
+
+    Allows club owners and posters to add images and generate Markdown
+    code to paste into their posts.
+    Club owners and ClubFeed administrators can also remove files and
+    choose whether to show them on the club page.
+    """
+
+    club = get_object_or_404(Club, id=club_id)
+
+    _r = _redirect_club_page(club, club_slug, "clubs:club_page")
+    if _r:
+        return _r
+
+    access = media_access(request.user, club)
+    if not "c" in access or not "r" in access:
+        raise PermissionDenied
+
+    if request.method == "POST":
+        form = MediaUploadForm(
+            request.POST,
+            request.FILES,
+            access=access
+        )
+        if form.is_valid():
+            f = form.save(commit=False)
+            f.uploader = request.user
+            f.image = form.cleaned_data["image"]
+            f.club = club
+            f.show_on_club_page = False
+            f.save()
+
+            messages.add_message(
+                request,
+                messages.SUCCESS,
+                f"Uploaded {f.name}."
+            )
+    else:
+        form = MediaUploadForm(access=access)
+
+    context = {
+        "title": f"Media management for {str(club)}",
+        "access": access,
+        "files": ClubImage.objects.filter(club=club).order_by("-id"),
+        "form": form,
+    }
+
+    return render(
+        request,
+        "clubs/media_manager.html",
+        context
+    )
+
+
+def edit_media(request, club_id, club_slug, media_id):
+    """Edit existing media."""
+
+    club = get_object_or_404(Club, id=club_id)
+    f = get_object_or_404(ClubImage, id=media_id, club=club)
+
+    _r = _redirect_club_page(club, club_slug, "clubs:edit_media")
+    if _r:
+        return _r
+
+    access = media_access(request.user, club)
+    if not "r" in access or not ("u" in access and "d" in access):
+        raise PermissionDenied
+
+    if request.method == "POST":
+        form = EditMediaForm(request.POST, instance=f, access=access)
+        if request.POST.get("delete"):
+            f.delete()
+
+            messages.add_message(
+                request,
+                messages.SUCCESS,
+                f"Deleted {f.name}."
+            )
+
+            return redirect(
+                "clubs:media_manager",
+                club_id=club.id,
+                club_slug=club.slug
+            )
+        elif form.is_valid():
+            form.save()
+
+            messages.add_message(
+                request,
+                messages.SUCCESS,
+                f"Updated {f.name}."
+            )
+
+            return redirect(
+                "clubs:media_manager",
+                club_id=club.id,
+                club_slug=club.slug
+            )
+    else:
+        form = EditMediaForm(instance=f, access=access)
+
+    context = {
+        "title": f"Edit {f.name}",
+        "form": form,
+        "form_data": True,
+    }
+
+    return render(request, 'form.html', context)

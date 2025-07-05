@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'styles/media-manager.css' %}">
+  <script src="https://unpkg.com/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha384-GNFwBvfVxBkLMJpYMOABq3c+d3KnQxudP/mGPkzpZSTYykLBNsZEnG2D9G/X/+7D" crossorigin="anonymous"></script>
+{% endblock head %}
+
+{% block main %}
+  {% if 'c' in access %}
+    <form method="post" enctype="multipart/form-data">
+      <fieldset>
+        <legend>Upload media</legend>
+        {% crispy form %}
+      </fieldset>
+    </form>
+  {% endif %}
+
+  {% if 'r' in access %}
+    <article>
+      <h2>Uploaded media</h2>
+      <div id="uploaded-media" class="row" data-masonry='{"itemSelector": ".card" }'>
+        {% for f in files %}
+          <div id="{{ f.id }}" class="card">
+            <img src="{{ f.image.url }}" alt="{{ f.alt }}" class="card-img-top">
+            <div class="card-body">
+              <a href="{% url 'clubs:edit_media' club_id=f.club.id club_slug=f.club.slug media_id=f.id %}" class="btn btn-secondary float-end">
+                Edit
+              </a>
+              <hgroup>
+                <h3 class="card-title">{{ f.name }}</h3>
+                <p class="card-subtitle text-body-secondary">
+                  Uploaded by
+                  {% if f.uploader %}
+                    <a href="{% url 'users:user_page' user_id=f.uploader.id username=f.uploader.username %}">
+                      {{ f.uploader }}
+                    </a>
+                  {% else %}
+                    an unknown user
+                  {% endif %}
+                </p>
+              </hgroup>
+
+              <ul class="list-group list-group-flush">
+                {% if f.alt %}
+                  <li class="list-group-item">
+                    <details>
+                      <summary>Alternative text</summary>
+                      <p>{{ f.alt }}</p>
+                    </details>
+                  </li>
+                {% endif %}
+
+                <li class="list-group-item">
+                  <details>
+                    <summary>Use this in a post</summary>
+                    <p>Paste this in your post's Markdown:</p>
+                    <code>![{{ f.alt }}]({{ f.image.url }} "{{ f.name }}")</code>
+                  </details>
+                </li>
+              </ul>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </article>
+  {% endif %}
+{% endblock main %}

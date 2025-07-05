@@ -84,7 +84,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.request",
                 # ClubFeed
-                'core.context_processors.can_post_context',
+                'clubs.context_processors.can_post_context',
             ],
             "builtins": [
                 "slippers.templatetags.slippers",
@@ -216,7 +216,6 @@ MARTOR_TOOLBAR_BUTTONS = [
     "ordered-list",
     "link",
     "image-link",
-    "image-upload",
     # 'emoji',  # until dependency hell with pymdownx is fixed
     "direct-mention",
     "toggle-maximize",

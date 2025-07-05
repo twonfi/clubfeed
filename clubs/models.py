@@ -2,15 +2,15 @@ from martor.models import MartorField
 from django.conf import settings
 from django.db import models
 from django.utils.text import slugify
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, User
 
 
 class Club(models.Model):
     """Club model.
 
     A club in ClubFeed sense is some sort of group for grouping posts
-     and other messages. They do not necessarily need to be school
-     clubs.
+    and other messages.
+    They do not necessarily need to be school clubs.
     """
 
     name = models.CharField(unique=True, max_length=255)
@@ -51,9 +51,16 @@ class ClubImage(models.Model):
     """Image upload for clubs."""
 
     club = models.ForeignKey(Club, on_delete=models.CASCADE)
+    uploader = models.ForeignKey(
+        User,
+        null=True,
+        on_delete=models.SET_NULL,
+    )
     image = models.ImageField(upload_to='club_images')
+    name = models.CharField('File name', max_length=255)
     alt = models.CharField('Alternative description',
         max_length=255, blank=True)
+    show_on_club_page = models.BooleanField(default=False)
 
     def __str__(self):
         return (f'{str(self.club)}'

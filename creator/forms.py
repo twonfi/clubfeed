@@ -1,6 +1,6 @@
 from django import forms
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
+from crispy_forms import layout
 from martor.fields import MartorFormField
 
 from clubs.models import Post
@@ -22,7 +22,7 @@ class CreatePostForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_id = "create-post-form"
         self.helper.form_method = "post"
-        self.helper.add_input(Submit("post", "Post"))
+        self.helper.add_input(layout.Submit("post", "Post"))
 
     class Meta:
         model = Post

@@ -44,6 +44,8 @@ def create_post(request):
 
         context = {
             "title": "Create post",
+            "pre_form": "To upload a file,"
+                        " use the media manager from the club page.",
             "form": form,
         }
         return render(request, "form.html", context)
