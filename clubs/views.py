@@ -152,6 +152,7 @@ def club_page(request, club_id, club_slug):
             if media_access(request.user, club)
             else False
         ),
+        "carousel": ClubImage.objects.filter(club=club),
         "always_shown": always_shown,
         "elided_page_range": paginator.get_elided_page_range(),
     }

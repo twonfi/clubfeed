@@ -61,4 +61,11 @@ img#profile-picture {
 
 img {
   max-width: 100%;
+  height: auto;
+}
+
+.carousel {
+  width: 70rem;
+  max-width: 100%;
+  margin: 0 auto;
 }
