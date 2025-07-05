@@ -24,7 +24,7 @@ env = Env(
     EMAIL_SMTP_USE_TLS=(bool, False),
     EMAIL_SMTP_SSL_CERTFILE=(str, None),
     EMAIL_SMTP_SSL_KEYFILE=(str, None),
-    EMAIL_SMTP_TIMEOUT=(int, ""),
+    EMAIL_SMTP_TIMEOUT=(int, 3),
 )
 Env.read_env(os.path.join(BASE_DIR, ".env"))
 
