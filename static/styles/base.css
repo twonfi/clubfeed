@@ -58,3 +58,7 @@ img#profile-picture {
   object-fit: cover;
   margin-bottom: 1em;
 }
+
+img {
+  max-width: 100%;
+}
