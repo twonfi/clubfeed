@@ -19,12 +19,12 @@ env = Env(
 Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 
-def _env_file(key: str) -> Path:
+def _env_file(key: str) -> str:
     env_ = env(key)
 
     if env_[:2] == './':
-        return BASE_DIR / env_[2:]
-    return Path(env_)
+        return str(BASE_DIR / env_[2:])
+    return str(Path(env_))
 
 
 DEBUG = env("DEBUG")
