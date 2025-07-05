@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load markdown_extras %}
 {% load slippers %}
+{% load comments %}
 
 {% block title %}{{ post.title }}{% endblock %}
 
@@ -29,5 +30,18 @@
         {% endif %}
       </fieldset>
     </form>
+
+    <div class="card card-block mb-5">
+      <fieldset class="card-body">
+        <legend class="card-title text-center pb-3">Comment on this post</legend>
+        {% render_comment_form for post %}
+      </fieldset>
+    </div>
+
+    {% if comment_count %}
+      <div class="comments">
+  {% render_comment_list for post %}
+      </div>
+    {% endif %}
   {% endif %}
 {% endblock %}

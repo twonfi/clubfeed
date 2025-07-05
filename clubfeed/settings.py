@@ -71,6 +71,9 @@ INSTALLED_APPS = [
     "martor",
     # Auto-delete files after change in the associated object
     "django_cleanup.apps.CleanupConfig",
+    # django-comments-xtd (in this order!)
+    "django_comments_xtd",
+    "django_comments",
     # ClubFeed
     "core",
     "creator",
@@ -120,6 +123,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "clubfeed.wsgi.application"
 
+# Email
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -270,3 +276,15 @@ MARTOR_TOOLBAR_BUTTONS = [
 ]
 MARTOR_ALTERNATIVE_JS_FILE_THEME = 'martor/martor.js'
 MARTOR_ALTERNATIVE_CSS_FILE_THEME = 'martor/martor.css'
+
+# django-comments-xtd
+COMMENTS_APP = "django_comments_xtd"
+COMMENTS_XTD_MAX_THREAD_LEVEL = 2
+COMMENTS_XTD_APP_MODEL_OPTIONS = {
+    'default': {
+        'allow_flagging': True,
+        'allow_feedback': False,
+        'show_feedback': False,
+        'who_can_post': 'users'
+    }
+}
