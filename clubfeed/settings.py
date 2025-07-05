@@ -56,6 +56,8 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     # martor
     "martor",
+    # Auto-delete files after change in the associated object
+    "django_cleanup.apps.CleanupConfig",
     # ClubFeed
     "core",
     "creator",
