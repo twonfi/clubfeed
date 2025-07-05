@@ -152,7 +152,8 @@ def club_page(request, club_id, club_slug):
             if media_access(request.user, club)
             else False
         ),
-        "carousel": ClubImage.objects.filter(club=club),
+        "carousel": ClubImage.objects.filter(club=club,
+            show_on_club_page=True),
         "always_shown": always_shown,
         "elided_page_range": paginator.get_elided_page_range(),
     }
@@ -273,7 +274,8 @@ def media_manager(request, club_id, club_slug):
             f.uploader = request.user
             f.image = form.cleaned_data["image"]
             f.club = club
-            f.show_on_club_page = False
+            if "p" in access:
+                f.show_on_club_page = form.cleaned_data["show_on_club_page"]
             f.save()
 
             messages.add_message(
@@ -330,6 +332,9 @@ def edit_media(request, club_id, club_slug, media_id):
             )
         elif form.is_valid():
             form.save()
+            if "p" in access:
+                f.show_on_club_page = form.cleaned_data["show_on_club_page"]
+            f.save()
 
             messages.add_message(
                 request,

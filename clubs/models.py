@@ -59,7 +59,9 @@ class ClubImage(models.Model):
     image = models.ImageField(upload_to='club_images')
     name = models.CharField('File name', max_length=255)
     alt = models.CharField('Alternative description',
-        max_length=255, blank=True)
+        max_length=255, blank=True,
+        help_text="Describe the image for screen reader users and if the"
+                  " image cannot load.")
     show_on_club_page = models.BooleanField(default=False)
 
     def __str__(self):

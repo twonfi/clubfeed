@@ -46,18 +46,6 @@ class EditPostForm(forms.ModelForm):
 
 
 class MediaUploadForm(forms.ModelForm):
-    def __init__(self, *args, **kwargs):
-        self.access = kwargs.get("access")
-        kwargs.pop("access")
-
-        super().__init__(*args, **kwargs)
-
-        # django-crispy-forms
-        self.helper = FormHelper()
-        self.helper.form_id = "media-upload-form"
-        self.helper.form_method = "post"
-        self.helper.add_input(Submit("upload", "Upload"))
-
     class Meta:
         model = ClubImage
         fields = (
@@ -65,6 +53,22 @@ class MediaUploadForm(forms.ModelForm):
             "name",
             "alt",
         )
+
+    def __init__(self, *args, **kwargs):
+        access = kwargs.get("access")
+        kwargs.pop("access")
+
+        super().__init__(*args, **kwargs)
+
+        if "p" in access:
+            self.fields["show_on_club_page"] = forms.BooleanField(
+                label="Show on club page", required=False)
+
+        # django-crispy-forms
+        self.helper = FormHelper()
+        self.helper.form_id = "media-upload-form"
+        self.helper.form_method = "post"
+        self.helper.add_input(Submit("upload", "Upload"))
 
 
 class EditMediaForm(forms.ModelForm):
@@ -79,11 +83,14 @@ class EditMediaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         access = kwargs.get("access")
         kwargs.pop("access")
+        f = kwargs.get("instance")
 
         super().__init__(*args, **kwargs)
 
         if "p" in access:
-            self.Meta.fields.append("show_on_club_page")
+            self.fields["show_on_club_page"] = forms.BooleanField(
+                label="Show on club page", required=False,
+                initial=f.show_on_club_page)
 
         # django-crispy-forms
         self.helper = FormHelper()
