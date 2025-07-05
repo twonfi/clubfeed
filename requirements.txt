@@ -18,3 +18,4 @@ whitenoise[brotli]~=6.5.0
 gunicorn~=23.0.0
 uvicorn~=0.35.0
 django-cleanup~=9.0.0
+strip-markdown~=1.3

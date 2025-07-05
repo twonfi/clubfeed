@@ -1,9 +1,25 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load markdown_extras %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'styles/club-list.css' %}">
+  <link rel="stylesheet" href="{% static 'styles/card-row.css' %}">
+{% endblock head %}
 
 {% block main %}
-  <ul aria-label="Club list">
+  <div id="club-list" class="row" data-masonry='{"itemSelector": ".card" }'>
     {% for club in clubs %}
-      <li><a href="{% url 'clubs:club_page' club_id=club.id club_slug=club.slug %}">{{ club.name }}</a></li>
+      <div id="{{ club.id }}" class="card">
+        {% if club.logo %}
+          <img src="{{ club.logo.url }}" alt class="card-img-top">
+        {% endif %}
+        <h2 class="card-title mt-2"><a href="{% url 'clubs:club_page' club_id=club.id club_slug=club.slug %}">{{ club.name }}</a></h2>
+
+        <div class="card-body">
+          {{ club.description|strip_markdown|truncatechars:180 }}
+      </div>
+      </div>
     {% endfor %}
-  </ul>
+  </div>
 {% endblock %}

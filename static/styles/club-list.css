@@ -1,0 +1,7 @@
+#club-list {
+  .card-img-top {
+    width: 90%;
+    height: auto;
+    margin: 1em auto;
+  }
+}

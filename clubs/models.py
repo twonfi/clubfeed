@@ -15,6 +15,7 @@ class Club(models.Model):
 
     name = models.CharField(unique=True, max_length=255)
     description = MartorField()
+    logo = models.ImageField(upload_to="club_logos", blank=True)
 
     owners = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="owners", blank=True

@@ -1,8 +1,19 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load markdown_extras %}
 {% load slippers %}
 
 {% block title %}{{ club.name }}{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'styles/club-page.css' %}">
+{% endblock head %}
+
+{% block pre_h1 %}
+  {% if club.logo %}
+    <img src="{{ club.logo.url }}" alt id="club-logo">
+  {% endif %}
+{% endblock pre_h1 %}
 
 {% block main %}
   {% if carousel %}
