@@ -9,17 +9,21 @@
 
 {% block main %}
   <div id="club-list" class="row" data-masonry='{"itemSelector": ".card" }'>
-    {% for club in clubs %}
-      <div id="{{ club.id }}" class="card">
-        {% if club.logo %}
-          <img src="{{ club.logo.url }}" alt class="card-img-top">
-        {% endif %}
-        <h2 class="card-title mt-2"><a href="{% url 'clubs:club_page' club_id=club.id club_slug=club.slug %}">{{ club.name }}</a></h2>
+    {% if clubs %}
+      {% for club in clubs %}
+        <div id="{{ club.id }}" class="card">
+          {% if club.logo %}
+            <img src="{{ club.logo.url }}" alt class="card-img-top">
+          {% endif %}
+          <h2 class="card-title mt-2"><a href="{% url 'clubs:club_page' club_id=club.id club_slug=club.slug %}">{{ club.name }}</a></h2>
 
-        <div class="card-body">
-          {{ club.description|strip_markdown|truncatechars:180 }}
-      </div>
-      </div>
-    {% endfor %}
+          <div class="card-body">
+            {{ club.description|strip_markdown|truncatechars:180 }}
+        </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <p>No clubs have been added yet. Ask the {{ request.site.name }} ClubFeed administrator to add one!</p>
+    {% endif %}
   </div>
 {% endblock %}
