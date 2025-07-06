@@ -31,7 +31,7 @@ def home(request):
         )
     else:
         return render(request, 'home/landing.html', context={
-            "title": "ClubFeed: See what's up in your community",
+            "title": f"{request.site.name}: See what's up in your community",
             "h1_from_title": False,
             "show_site_name_in_title": False,
         })
