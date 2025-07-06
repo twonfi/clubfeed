@@ -5,12 +5,10 @@
 [![built at | Hack Club](https://img.shields.io/badge/built_at-Hack_Club-%23ec3750?logo=hackclub)](https://hackclub.com)
 [![part of | 2025 Summer of Making](https://img.shields.io/badge/part_of-2025_Summer_of_Making-%23f6dbba)](https://summer.hackclub.com)
 
-# ClubFeed: A tool for distraction-free school communication
+# ClubFeed: A reusable web app to see what's up with your community
 ## What is ClubFeed?
-Well, it's not Instagram!
-
-**ClubFeed** is a mix between Instagram's club communication usage, the simplicity of other school communication apps,
-and Reddit's grouping of posts.
+**ClubFeed** is a mix between social media's club communication usage, the simplicity of other communication apps,
+and forums' grouping of posts.
 
 Once the ClubFeed admin sets up clubs, club owners and posters can post to them and anyone can follow clubs to see them
 on their own ClubFeed.
