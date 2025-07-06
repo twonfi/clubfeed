@@ -50,7 +50,7 @@ img#profile-picture {
   margin-bottom: 1em;
 }
 
-img {
+img:not(.no-resize) {
   max-width: 100%;
   height: auto;
   max-height: 70vh;

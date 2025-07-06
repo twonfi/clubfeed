@@ -1,5 +1,19 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'styles/landing.css' %}">
+{% endblock head %}
 
 {% block main %}
-  hello
+  <picture id="screenshot-devices">
+    <source srcset="{% static 'images/landing/screenshots.webp' %}" type="image/webp">
+    <img src="{% static 'images/landing/screenshots.png' %}" class="mx-auto d-block" alt>
+  </picture>
+
+  <h1>See what's up in your community</h1>
+
+  <a href="{% url 'account_login' %}" class="btn btn-primary">Sign in</a> to get posting access, comment, and make your own ClubFeed.
+
+  <p>{{ request.site.name }} is powered by ClubFeed</p>
 {% endblock main %}
