@@ -1,5 +1,10 @@
 ![A paper tray with a "!!!" poster with the text "ClubFeed"](static/logo/logo-black-on-transparent.svg "ClubFeed logo")
 
+[![Django CI](https://github.com/twonfi/clubfeed/actions/workflows/django.yml/badge.svg)](https://github.com/twonfi/clubfeed/actions/workflows/django.yml)
+[![license | GPLv3](https://img.shields.io/badge/license-GPLv3-blue)](https://www.gnu.org/licenses/gpl-3.0.html)
+[![built at | Hack Club](https://img.shields.io/badge/built_at-Hack_Club-%23ec3750?logo=hackclub)](https://hackclub.com)
+[![part of | 2025 Summer of Making](https://img.shields.io/badge/part_of-2025_Summer_of_Making-%23f6dbba)](https://summer.hackclub.com)
+
 # ClubFeed: A tool for distraction-free school communication
 ## What is ClubFeed?
 Well, it's not Instagram!
@@ -14,10 +19,30 @@ on their own ClubFeed.
 ClubFeed uses the _Django_ web framework, which is powered by _Python_.
 
 ## How do I set it up?
-First, take a look at the [Django project website](https://www.djangoproject.com/).
-After you know the basics of Django, create an environment file (`.env`) using the template from `.env.dist`.
+Take a look at `INSTALL.md`.
 
-Running `python3 manage.py runserver` will give you a _**development**_ server. _**Don't use it in production!**_
+***
 
-ClubFeed is compatible with SQLite and PostgreSQL.
-SQLite is easier for development purposes, while PostgreSQL is more robust for production.
+## Code contributions/patches?
+I still need to figure some things out, like if to use the GNU AGPL instead (some libraries are AGPL).
+I'll try to be nice and not require you to sign a CLA, but don't waste time writing patches for now.
+In the meantime, file an issue and I might be able to implement it by writing my own code.
+
+## License
+ClubFeed
+<br>
+Copyright © 2025 twonum and ClubFeed contributors
+
+ClubFeed is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+ClubFeed is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with ClubFeed.
+If not, see <https://www.gnu.org/licenses/>.
