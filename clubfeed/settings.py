@@ -2,6 +2,7 @@ from pathlib import Path
 import os
 
 from django.contrib.messages import constants as messages
+from django.urls import reverse
 from environ import Env
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -251,6 +252,7 @@ SITE_ID = env("SITE_ID")
 # allauth
 ACCOUNT_ADAPTER = "users.allauth.AccountAdapter"
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
+LOGIN_REDIRECT_URL = "/"
 
 # django-crispy-forms
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
