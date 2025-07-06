@@ -185,6 +185,8 @@ match env("EMAIL_BACKEND"):
         EMAIL_TIMEOUT = env("EMAIL_SMTP_TIMEOUT")
     case "console":
         EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+    case "dummy":
+        EMAIL_BACKEND = "django.core.mail.backends.dummy.EmailBackend"
 
 
 
