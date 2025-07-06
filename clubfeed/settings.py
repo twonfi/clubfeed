@@ -28,6 +28,8 @@ env = Env(
     EMAIL_SMTP_SSL_CERTFILE=(str, None),
     EMAIL_SMTP_SSL_KEYFILE=(str, None),
     EMAIL_SMTP_TIMEOUT=(int, 3),
+    # allauth
+    PASSKEY=(bool, False),
 )
 Env.read_env(os.path.join(BASE_DIR, ".env"))
 
@@ -57,6 +59,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sites",
+    "django.contrib.humanize",
     # tz_detect
     "tz_detect",
     # allauth
@@ -64,6 +67,7 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "allauth.mfa",
     "widget_tweaks",
     "slippers",
     # django-bootstrap5
@@ -253,6 +257,8 @@ SITE_ID = env("SITE_ID")
 ACCOUNT_ADAPTER = "users.allauth.AccountAdapter"
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 LOGIN_REDIRECT_URL = "/"
+MFA_SUPPORTED_TYPES = ["totp", "webauthn", "recovery_codes"]
+PASSKEY = env("PASSKEY")
 
 # django-crispy-forms
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
