@@ -26,7 +26,7 @@ def _redirect_post_page(
         return redirect(
             url,
             club_id=club.id,
-            club_slug=club_slug,
+            club_slug=club.slug,
             post_id=post.id,
             post_slug=post.slug,
         )
