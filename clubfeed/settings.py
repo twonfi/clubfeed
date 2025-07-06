@@ -13,6 +13,7 @@ env = Env(
     MEDIA_ROOT=(str, ""),
     SITE_ID=(int, 1),
     INSTALLED_APPS=(list, []),
+    NOINDEX=(bool, True),
     # Database
     DB_POSTGRES_NAME=(str, ''),
     DB_POSTGRES_USER=(str, ''),
@@ -121,7 +122,8 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 # ClubFeed
-                'clubs.context_processors.can_post_context',
+                "clubs.context_processors.can_post_context",
+                "core.context_processors.noindex_context",
             ],
             "builtins": [
                 "slippers.templatetags.slippers",
@@ -252,6 +254,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Sites framework
 SITE_ID = env("SITE_ID")
+
+# NOINDEX
+NOINDEX = env("NOINDEX")
 
 # allauth
 ACCOUNT_ADAPTER = "users.allauth.AccountAdapter"
