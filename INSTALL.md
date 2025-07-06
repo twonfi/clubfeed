@@ -69,3 +69,6 @@ Lastly, in the admin, go to the Social applications section in the admin and rep
 received from the service.
 If the guide asks you to add something to `SOCIALACCOUNT_PROVIDERS`, add the dictionary in (parse this in your head)
 `SOCIALACCOUNT_PROVIDERS[0][serv_name]` to the Settings field.
+
+## Change the ClubFeed logo
+Replace `static/logo/sitelogo.svg` with an SVG logo.
