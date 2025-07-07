@@ -39,7 +39,9 @@
 
   <article>
     <h2>From {{ club.name }}</h2>
+    <div class="markdown">
 {{ club.description|sanitized_markdown|safe }}
+    </div>
   </article>
 
   {% if user.is_authenticated %}

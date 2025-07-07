@@ -3,6 +3,7 @@ from django.conf import settings
 from django.db import models
 from django.utils.text import slugify
 from django.contrib.auth.models import Group, User
+from django.urls import reverse
 
 
 class Club(models.Model):
@@ -47,6 +48,10 @@ class Club(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse("clubs:club_page", kwargs={
+            "club_id": self.id, "club_slug": self.slug})
+
 
 class ClubImage(models.Model):
     """Image upload for clubs."""
@@ -88,6 +93,7 @@ class Post(models.Model):
     upvoters = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="upvoters", blank=True
     )
+    allow_comments = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -99,6 +105,11 @@ class Post(models.Model):
 
     def __str__(self):
         return f"{str(self.club)} > {self.title}"
+
+    def get_absolute_url(self):
+        return reverse("clubs:view_post", kwargs={
+            "club_id": self.club.id, "club_slug": self.club.slug,
+            "post_id": self.id, "post_slug": self.slug})
 
 
 class ShortMessage(models.Model):

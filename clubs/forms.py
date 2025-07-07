@@ -42,6 +42,7 @@ class EditPostForm(forms.ModelForm):
         fields = (
             "title",
             "body",
+            "allow_comments",
         )
 
 

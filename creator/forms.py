@@ -30,4 +30,5 @@ class CreatePostForm(forms.ModelForm):
             "club",
             "title",
             "body",
+            "allow_comments",
         )

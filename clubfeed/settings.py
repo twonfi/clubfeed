@@ -4,6 +4,7 @@ import os
 from django.contrib.messages import constants as messages
 from django.urls import reverse
 from environ import Env
+from csp import constants as csp
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 env = Env(
@@ -61,8 +62,11 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",
     "django.contrib.humanize",
-    # tz_detect
+    # Single-line stuff
     "tz_detect",
+    "django_bootstrap5",
+    "rest_framework",
+    "martor",
     # allauth
     "allauth_ui",
     "allauth",
@@ -71,13 +75,9 @@ INSTALLED_APPS = [
     "allauth.mfa",
     "widget_tweaks",
     "slippers",
-    # django-bootstrap5
-    "django_bootstrap5",
     # django-crispy-forms
     "crispy_forms",
     "crispy_bootstrap5",
-    # martor
-    "martor",
     # Auto-delete files after change in the associated object
     "django_cleanup.apps.CleanupConfig",
     # django-comments-xtd (in this order!)
@@ -101,12 +101,12 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.contrib.sites.middleware.CurrentSiteMiddleware",
-    # tz_detect
+    # From packages
     "tz_detect.middleware.TimezoneMiddleware",
-    # allauth
     "allauth.account.middleware.AccountMiddleware",
-    # whitenoise
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "csp.middleware.CSPMiddleware",
 ]
 
 ROOT_URLCONF = "clubfeed.urls"
@@ -213,6 +213,24 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# CORS and CSP
+CORS_ALLOWED_ORIGINS = [
+    "https://cdn.jsdelivr.net",
+    "https://cdnjs.cloudflare.com",
+    "https://unpkg.com",
+]
+# CONTENT_SECURITY_POLICY = {
+#     "DIRECTIVES": {
+#         "default-src": [csp.SELF] + CORS_ALLOWED_ORIGINS,
+#         "script-src": [csp.SELF, csp.NONCE] + CORS_ALLOWED_ORIGINS,
+#         "style-src": [csp.SELF, csp.NONCE] + CORS_ALLOWED_ORIGINS,
+#         "frame-ancestors": [csp.SELF],
+#         "form-action": [csp.SELF],
+#         "report-uri": "/csp-report/",
+#     },
+# }
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
@@ -306,8 +324,10 @@ COMMENTS_XTD_MAX_THREAD_LEVEL = 2
 COMMENTS_XTD_APP_MODEL_OPTIONS = {
     'default': {
         'allow_flagging': True,
-        'allow_feedback': False,
-        'show_feedback': False,
-        'who_can_post': 'users'
-    }
+        'allow_feedback': True,
+        'show_feedback': True,
+        'who_can_post': 'users',
+    },
 }
+COMMENTS_XTD_FROM_EMAIL = env("EMAIL_FROM")
+COMMENTS_XTD_CONTACT_EMAIL = env("EMAIL_CONTACT")

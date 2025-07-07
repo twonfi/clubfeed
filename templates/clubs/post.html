@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load markdown_extras %}
 {% load slippers %}
 {% load comments %}
+{% load comments_xtd %}
 
 {% block title %}{{ post.title }}{% endblock %}
+
+{% get_comment_count for post as comment_count %}
 
 {% block pre_h1 %}
   <span class="poster">
@@ -14,7 +18,9 @@
 {% endblock %}
 
 {% block main %}
+  <div class="markdown">
 {{ post.body|sanitized_markdown|safe }}
+  </div>
 
   {% if user.is_authenticated %}
     <form id="post-actions" method="post">{% csrf_token %}
@@ -30,18 +36,36 @@
         {% endif %}
       </fieldset>
     </form>
-
-    <div class="card card-block mb-5">
-      <fieldset class="card-body">
-        <legend class="card-title text-center pb-3">Comment on this post</legend>
-        {% render_comment_form for post %}
-      </fieldset>
-    </div>
-
-    {% if comment_count %}
-      <div class="comments">
-  {% render_comment_list for post %}
-      </div>
-    {% endif %}
   {% endif %}
+
+<div id="comments"></div>
+
+  {# This is all comments_xtd's fault! #}
+  <script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/remarkable@2.0.1/dist/remarkable.min.js"></script>
+  <!--suppress JSUnresolvedReference -->
+  <script nonce="{{ request.csp_nonce }}">
+    window.comments_props = {% get_commentbox_props for post %};
+    window.comments_props_override = {
+      allow_comments: {% if post.allow_comments %}true{% else %}false{% endif %},
+      allow_feedback: true,
+      show_feedback: true,
+      allow_flagging: true,
+      polling_interval: 5000 // ms
+    };
+  </script>
+  {% comment 'We already have Bootstrap' %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  {% endcomment %}
+  <script src="{% url 'javascript-catalog' %}"></script>
+  <script src="{% static 'django_comments_xtd/js/django-comments-xtd-2.10.6.js' %}"></script>
+  <!--suppress JSUnresolvedReference -->
+  <script nonce="{{ request.csp_nonce }}">
+    window.addEventListener('DOMContentLoaded', (_) => {
+      const tooltipQs = '[data-bs-toggle="tooltip"]';
+      const tooltipList = document.querySelectorAll(tooltipQs);
+      [...tooltipList].map(el => new bootstrap.Tooltip(el, {html: true}));
+    });
+  </script>
 {% endblock %}

@@ -3,8 +3,9 @@ from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sites.shortcuts import get_current_site
-from allauth.account.decorators import secure_admin_login
 from django.db.utils import OperationalError
+from django.views.i18n import JavaScriptCatalog
+from allauth.account.decorators import secure_admin_login
 
 try:
     site = get_current_site(None)
@@ -18,6 +19,7 @@ admin.site.login = secure_admin_login(admin.site.login)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
     re_path(r"^comments/", include('django_comments_xtd.urls')),
     # tz_detect
     path("_tz_detect/", include("tz_detect.urls")),

@@ -14,7 +14,9 @@
 {% endblock pre_h1 %}
 
 {% block main %}
+  <div class="markdown">
 {{ profile.description|sanitized_markdown|safe }}
+  </div>
 
   <fieldset id="user-actions">
     <legend>User actions</legend>
