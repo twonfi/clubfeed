@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     "django_bootstrap5",
     "rest_framework",
     "martor",
+    "avatar",
     # allauth
     "allauth_ui",
     "allauth",
@@ -331,3 +332,11 @@ COMMENTS_XTD_APP_MODEL_OPTIONS = {
 }
 COMMENTS_XTD_FROM_EMAIL = env("EMAIL_FROM")
 COMMENTS_XTD_CONTACT_EMAIL = env("EMAIL_CONTACT")
+COMMENTS_XTD_API_GET_USER_AVATAR = "core.utils.avatar_url_from_comment"
+
+# django-avatar
+AVATAR_PROVIDERS = (
+    "avatar.providers.PrimaryAvatarProvider",
+    "avatar.providers.GravatarAvatarProvider",
+)
+AVATAR_GRAVATAR_DEFAULT = "identicon"

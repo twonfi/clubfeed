@@ -56,6 +56,11 @@ def user_page(request, user_id, username):
             if can_edit_profile
             else False
         ),
+        "change_avatar": (
+            reverse("avatar:change")
+            if user == request.user
+            else False
+        ),
     }
 
     return render(request, "users/user_page.html", context)

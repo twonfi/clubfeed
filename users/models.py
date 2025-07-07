@@ -1,6 +1,7 @@
 from martor.models import MartorField
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 class Profile(models.Model):
@@ -12,7 +13,6 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE,
         primary_key=True)
-    picture = models.ImageField(upload_to='profile_pictures', blank=True)
     description = MartorField(blank=True)
 
     class Meta:
@@ -20,3 +20,9 @@ class Profile(models.Model):
 
     def __str__(self):
         return str(self.user)
+
+    def get_absolute_url(self):
+        return reverse("users:user_page", kwargs={
+            "user_id": self.user.id,
+            "username": self.user.username,
+        })

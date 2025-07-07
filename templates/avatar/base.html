@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block head_title %}Avatar{% endblock head_title %}
+
+{% block main %}
+  <h1>Avatar</h1>
+  {% block content %}{% endblock content %}
+  <a class="btn btn-secondary" href="{% url 'users:user_page' user_id=request.user.id username=request.user.username %}">Go back to your profile</a>
+{% endblock main %}

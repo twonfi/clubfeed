@@ -23,6 +23,8 @@ urlpatterns = [
     re_path(r"^comments/", include('django_comments_xtd.urls')),
     # tz_detect
     path("_tz_detect/", include("tz_detect.urls")),
+    # avatar
+    path("avatar/", include("avatar.urls")),
     # allauth
     path("accounts/", include("allauth.urls")),
     # martor

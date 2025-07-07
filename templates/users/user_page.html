@@ -1,15 +1,14 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load markdown_extras %}
+{% load avatar_tags %}
 
 {% block head %}
   <link rel="stylesheet" href="{% static 'styles/user-page.css' %}">
 {% endblock head %}
 
 {% block pre_h1 %}
-  {% if profile.picture %}
-    <img id="profile-picture" src="{{ profile.picture.url }}" alt>
-  {% endif %}
+  {% avatar user 192 id="profile-picture" %}
   <div>Joined on {{ user.date_joined }}</div>
 {% endblock pre_h1 %}
 
@@ -21,5 +20,6 @@
   <fieldset id="user-actions">
     <legend>User actions</legend>
     {% if edit_profile %}{% #button_link classes='btn-secondary' href=edit_profile %}Edit{% /button_link %}{% endif %}
+    {% if change_avatar %}{% #button_link classes='btn-secondary' href=change_avatar %}Change avatar{% /button_link %}{% endif %}
   </fieldset>
 {% endblock main %}
