@@ -6,10 +6,6 @@
   <title>{% block head_title %}{% endblock head_title %}{{ title }}{% if show_site_name_in_title is not False %} -
     {{ request.site.name }}{% endif %}</title>
   {% if NOINDEX %}<meta name="robots" content="noindex, nofollow">{% endif %}
-  <link rel="icon" href="{% static 'fav/favicon.svg' %}" type="image/svg+xml">
-  <link rel="manifest" href="{% static 'manifest.json' %}">
-  <meta name="theme-color" content="#0424c1">
-  <meta name="apple-mobile-web-app-title" content="ClubFeed">
 
   <script src="{% static 'scripts/dark.js' %}"></script>
 
@@ -20,6 +16,11 @@
   {# ClubFeed styles are loaded last to override Bootstrap, etc. #}
   <link rel="stylesheet" href="{% static 'styles/base.css' %}">
   <link rel="stylesheet" href="{% static 'styles/markdown.css' %}">
+
+  <link rel="icon" href="{% static 'fav/favicon.svg' %}" type="image/svg+xml">
+  <link rel="manifest" href="{% static 'manifest.json' %}">
+  <meta name="theme-color" content="#0424c1">
+  <meta name="apple-mobile-web-app-title" content="ClubFeed">
 
   {% block head %}{% endblock head %}
 </head>
