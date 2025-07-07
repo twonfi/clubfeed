@@ -322,7 +322,7 @@ MARTOR_ALTERNATIVE_CSS_FILE_THEME = 'martor/martor.css'
 COMMENTS_APP = "django_comments_xtd"
 COMMENTS_XTD_MAX_THREAD_LEVEL = 2
 COMMENTS_XTD_APP_MODEL_OPTIONS = {
-    'default': {
+    'clubs.post': {
         'allow_flagging': True,
         'allow_feedback': True,
         'show_feedback': True,
