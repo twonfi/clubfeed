@@ -282,7 +282,8 @@ ACCOUNT_ADAPTER = "users.allauth.AccountAdapter"
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
 LOGIN_REDIRECT_URL = "/"
 MFA_SUPPORTED_TYPES = ["totp", "webauthn", "recovery_codes"]
-PASSKEY = env("PASSKEY")
+MFA_PASSKEY_LOGIN_ENABLED = env("PASSKEY")
+MFA_PASSKEY_SIGNUP_ENABLED = env("PASSKEY")
 
 # django-crispy-forms
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
